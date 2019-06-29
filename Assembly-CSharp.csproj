@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Breadcrumb.cs" />
     <Compile Include="Assets\Scripts\Course.cs" />
+    <Compile Include="Assets\Scripts\CourseDetails.cs" />
     <Compile Include="Assets\Scripts\CourseNode.cs" />
     <Compile Include="Assets\Scripts\CourseOffering.cs" />
     <Compile Include="Assets\Scripts\CourseResult.cs" />

@@ -2,11 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshFilter))]
+[RequireComponent(typeof(MeshRenderer))]
 public class RadarChart : MonoBehaviour
 {
+    Mesh mesh;
+    public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
-    public Mesh mesh;
 
+    private void Awake()
+    {
+        meshFilter = GetComponent<MeshFilter>();
+    }
+
+    [ContextMenu("Set Chart")]
     public void SetChart(List<CourseMetric> attributes)
     {
         Destroy(mesh);
@@ -43,14 +52,9 @@ public class RadarChart : MonoBehaviour
         }
 
         mesh.SetUVs(0, uvs);
-    }
-}
 
-public class CourseMetric
-{
-    public string attribute;
-    public float normalizedScore { get { return score / (scoreMax - scoreMin); } }
-    public float score;
-    public float scoreMin;
-    public float scoreMax;
+        mesh.RecalculateBounds();
+        mesh.RecalculateNormals();
+        meshFilter.mesh = mesh;
+    }
 }

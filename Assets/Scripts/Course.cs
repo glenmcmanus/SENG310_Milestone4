@@ -25,3 +25,12 @@ public enum Department
     SENG,
     STAT
 }
+
+public class CourseMetric
+{
+    public string attribute;
+    public float normalizedScore { get { return score / (scoreMax - scoreMin); } }
+    public float score;
+    public float scoreMin;
+    public float scoreMax;
+}

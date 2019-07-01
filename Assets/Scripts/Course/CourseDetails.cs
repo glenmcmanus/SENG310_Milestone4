@@ -20,7 +20,7 @@ public class CourseDetails : MonoBehaviour
     public void SetDetails(Course course, RectTransform trigger)
     {
         rect.position = trigger.position;
-        courseText.text = course.department + " " + course.number;
+        courseText.text = course.subject + " " + course.number;
         descriptionText.text = course.description;
     }
 }

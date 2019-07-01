@@ -4,20 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+[System.Serializable]
+public class CourseResult : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Course course;
+    public CourseOffering course;
     public Text title;
 
-    private void Awake()
+    public void Initialize(CourseOffering course)
     {
-        title.text = course.department.ToString() + " " + course.number;
+        this.course = course;
+        //set ui values
+        title.text = course.course.subject.ToString() + " " + course.course.number;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         Debug.Log("Mouse enter " + name);
-        MainPanel.instance.hoverDetails.SetDetails(course, GetComponent<RectTransform>());
+        MainPanel.instance.hoverDetails.SetDetails(course.course, GetComponent<RectTransform>());
         MainPanel.instance.hoverDetails.gameObject.SetActive(true);
     }
 

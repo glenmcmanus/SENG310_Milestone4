@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new_Course", menuName = "Course")]
-[System.Serializable]
 public class Course : ScriptableObject
 {
     public int number;
-    public Department department;
-    //public List<string> tags;
+    public Level level;
+    public Subject subject;
 
     [TextArea]
     public string description;
@@ -16,15 +15,28 @@ public class Course : ScriptableObject
     public CourseMetric mean;
     public CourseMetric hoursPerWeek;
     public CourseMetric difficulty;
+
+    public List<string> tags;
 }
 
 [System.Serializable]
-public enum Department
+public enum Subject
 {
     CSC,
     MATH,
     SENG,
     STAT
+}
+
+public enum Level
+{
+    L000,
+    L100,
+    L200,
+    L300,
+    L400,
+    L500,
+    L600
 }
 
 [System.Serializable]

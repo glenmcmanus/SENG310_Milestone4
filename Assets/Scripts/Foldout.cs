@@ -10,6 +10,10 @@ public class Foldout : MonoBehaviour
     public List<GameObject> disableExcludes;
     public List<Foldout> subFold;
 
+
+    public bool preserveActiveState = true;
+    public List<GameObject> inactiveChildren;
+
     [Tooltip("(1 / speed) seconds between steps.")]
     [Range(1,5000)]
     public float speed = 3f;
@@ -151,6 +155,16 @@ public class Foldout : MonoBehaviour
         {
             if (disableExcludes.Contains(transform.GetChild(i).gameObject))
                 continue;
+
+            if (preserveActiveState && isFolded && transform.GetChild(i).gameObject.activeSelf == false)
+            {
+                inactiveChildren.Add(transform.GetChild(i).gameObject);
+            }
+            else if (preserveActiveState && !isFolded && inactiveChildren.Contains(transform.GetChild(i).gameObject))
+            {
+                inactiveChildren.Remove(transform.GetChild(i).gameObject);
+                continue;
+            }
 
             transform.GetChild(i).gameObject.SetActive(!isFolded);
         }

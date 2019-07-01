@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Foundations of Computer Science
   m_EditorClassIdentifier: 
   number: 110
+  level: 0
   department: 0
   description: This is the description of a course.
   mean:
@@ -30,3 +31,4 @@ MonoBehaviour:
     score: 0
     scoreMin: 0
     scoreMax: 0
+  tags: []

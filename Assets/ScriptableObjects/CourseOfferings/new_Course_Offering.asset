@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: new_Course_Offering
   m_EditorClassIdentifier: 
   course: {fileID: 11400000, guid: 4e9e3849255463a44b293292929f5817, type: 2}
-  semester: 0
+  semester: 2
   days: 000000000200000004000000
+  building: 0
+  wing: 1
+  room: 104
   startTime: {x: 10, y: 30}
   endTime: {x: 14, y: 30}
   prof: Billy Bob Thornton

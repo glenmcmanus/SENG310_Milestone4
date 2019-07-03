@@ -12,6 +12,8 @@ public class Course : ScriptableObject
     [TextArea]
     public string description;
 
+    public List<Course> prereqs;
+
     public CourseMetric mean;
     public CourseMetric hoursPerWeek;
     public CourseMetric difficulty;
@@ -22,6 +24,7 @@ public class Course : ScriptableObject
 [System.Serializable]
 public enum Subject
 {
+    Any,
     CSC,
     MATH,
     SENG,
@@ -30,6 +33,7 @@ public enum Subject
 
 public enum Level
 {
+    Any,
     L000,
     L100,
     L200,

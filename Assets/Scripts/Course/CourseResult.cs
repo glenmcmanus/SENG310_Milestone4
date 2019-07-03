@@ -9,6 +9,8 @@ public class CourseResult : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     public CourseOffering course;
     public Text title;
+    public ResultColumn column;
+    public HoverPreset hoverPreset;
 
     public void Initialize(CourseOffering course)
     {
@@ -20,23 +22,29 @@ public class CourseResult : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerEnter(PointerEventData eventData)
     {
         Debug.Log("Mouse enter " + name);
-        MainPanel.instance.hoverDetails.SetDetails(course.course, GetComponent<RectTransform>());
+
+        MainPanel.instance.hoverDetails.offerings.Clear();
+        MainPanel.instance.hoverDetails.SetDetails(this); //course.course);
         MainPanel.instance.hoverDetails.gameObject.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         Debug.Log("Mouse exit " + name);
-        StartCoroutine(DelayedDisable());
+
+        if(!MainPanel.instance.hoverDetails.hasFocus)
+        {
+            StartCoroutine(DelayedDisable());
+        }
     }
 
     IEnumerator DelayedDisable()
     {
-        yield return new WaitForFixedUpdate();
+        yield return null;
 
         if (MainPanel.instance.hoverDetails.hasFocus)
             yield break;
 
-        MainPanel.instance.hoverDetails.gameObject.SetActive(false);
+        MainPanel.instance.hoverDetails.ClearDetails();
     }
 }

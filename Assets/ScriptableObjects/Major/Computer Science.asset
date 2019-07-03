@@ -10,8 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 784fcbeae5691eb4b8d7f7fc74d7e189, type: 3}
-  m_Name: new Major
+  m_Name: Computer Science
   m_EditorClassIdentifier: 
+  electives:
+  - subject: 0
+    level: 0
+    count: 3
+  - subject: 1
+    level: 4
+    count: 3
+  - subject: 1
+    level: 5
+    count: 0
   firstYearCore:
   - {fileID: 11400000, guid: 4e9e3849255463a44b293292929f5817, type: 2}
   firstYearRecommended: []

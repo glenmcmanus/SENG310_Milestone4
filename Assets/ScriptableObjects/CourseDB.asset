@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   csc:
   - {fileID: 11400000, guid: 89b0bf0820de2d548bf5b04263ddec31, type: 2}
+  - {fileID: 11400000, guid: 961bb52cad2703e49af45588b12ce051, type: 2}
+  - {fileID: 11400000, guid: ccb6650792fe98e4ba73a3d265c54ceb, type: 2}
   seng: []
   math: []
   stat: []

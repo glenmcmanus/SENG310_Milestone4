@@ -17,7 +17,7 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         Debug.Log("Mouse enter " + name);
-        MainPanel.instance.hoverDetails.SetDetails(course, GetComponent<RectTransform>());
+        MainPanel.instance.hoverDetails.SetDetails(course);
         MainPanel.instance.hoverDetails.gameObject.SetActive(true);
     }
 

@@ -6,20 +6,18 @@ using UnityEngine.UI;
 public class CourseDetails : MonoBehaviour
 {
     public RectTransform rect;
-    public Semester semester = Semester.Fall;
-    public Text semesterText;
     public Text courseText;
     public Text descriptionText;
 
-    public void Awake()
+    public float offsetScale = 200f;
+
+    public virtual void Awake()
     {
         rect = GetComponent<RectTransform>();
-        semesterText.text = semester.ToString();
     }
 
-    public void SetDetails(Course course, RectTransform trigger)
+    public virtual void SetDetails(Course course)
     {
-        rect.position = trigger.position;
         courseText.text = course.subject + " " + course.number;
         descriptionText.text = course.description;
     }

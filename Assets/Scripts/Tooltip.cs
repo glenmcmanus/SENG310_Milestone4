@@ -18,4 +18,5 @@ public class Tooltip : MonoBehaviour
 
         instance = this;
     }
+    
 }

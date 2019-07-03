@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class CourseSearch : MonoBehaviour
+public class CourseSearch : MonoBehaviour, IPointerEnterHandler
 {
+
+    public static CourseSearch instance;
+
     public CourseDB courseDB;
+
+    [Header("CurrentResults")]
+    public List<CourseOffering> offerings;
+    public List<Course> courses;
 
     [Header("Sidebar")]
     //do union / intersect for tags?
@@ -17,13 +25,36 @@ public class CourseSearch : MonoBehaviour
 
     [Header("MainPanel")]
     public GameObject columnSpace;
+    public GameObject prompt;
 
     [Header("Prefabs")]
     public ResultColumn column;
     public CourseResult courseResult;
 
+    void Awake()
+    {
+        if(instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        MainPanel.instance.hoverDetails.ClearDetails();
+    }
+
     public void FindCourses()
     {
+        prompt.SetActive(false);
+        MainPanel.instance.hoverDetails.transform.SetParent(MainPanel.instance.transform);
+
+        offerings.Clear();
+        courses.Clear();
+
         //check if criteria is dirty?
 
         //clear columns
@@ -67,9 +98,9 @@ public class CourseSearch : MonoBehaviour
         }
     }
 
-    public void Filter(List<CourseOffering> courses)
+    public void Filter(List<CourseOffering> subjectCourses)
     {
-        if (courses.Count <= 0)
+        if (subjectCourses.Count <= 0)
         {
             //write a message?
             return;
@@ -103,8 +134,9 @@ public class CourseSearch : MonoBehaviour
             return;
         }
 
-        List<CourseOffering> results = new List<CourseOffering>();
-        foreach (CourseOffering c in courses)
+        //List<Course> courses = new List<Course>();
+        //List<CourseOffering> offerings = new List<CourseOffering>();
+        foreach (CourseOffering c in subjectCourses)
         {
             if (c.semester != semester)
                 continue;
@@ -124,20 +156,30 @@ public class CourseSearch : MonoBehaviour
             if (skip && tags.Count > 0)
                 continue;
 
-            results.Add(c);
+            if(!courses.Contains(c.course))
+                courses.Add(c.course);
+
+            offerings.Add(c);
         }
 
-        if (results.Count > 0)
+        if (offerings.Count > 0)
         {
             ResultColumn rColumn = Instantiate(column);
             rColumn.transform.SetParent(columnSpace.transform, false);
 
-            foreach (CourseOffering c in results)
+            List<Course> temp = new List<Course>();
+            foreach (CourseOffering c in offerings)
             {
+                if (temp.Contains(c.course))
+                    continue;
+
                 CourseResult cr = Instantiate(courseResult);
                 cr.transform.SetParent(rColumn.transform.GetChild(1).GetChild(0), false);
 
                 cr.Initialize(c);
+
+                cr.column = rColumn;
+                temp.Add(c.course);
             }
         }
     }

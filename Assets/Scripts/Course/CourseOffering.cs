@@ -6,6 +6,7 @@ using UnityEngine;
 public class CourseOffering : ScriptableObject
 {
     public Course course;
+    public string Section;
     public Semester semester;
     public List<Days> days;
     public Building building;

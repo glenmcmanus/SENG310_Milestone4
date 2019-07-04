@@ -212,12 +212,12 @@ public class DegreeTree : MonoBehaviour
 
         UILineRenderer line = go.GetComponent<UILineRenderer>();
         line.enabled = true;
-        //Vector2[] endpoints = new Vector2[] { (Vector2)start.rect.position, (Vector2)end.rect.position };
-        //line.Points = endpoints;
+        Vector2[] endpoints = new Vector2[] { (Vector2)start.rect.position, (Vector2)end.rect.position };
+        line.Points = endpoints;
 
-        UILineConnector connector = line.GetComponent<UILineConnector>();
+        /*UILineConnector connector = line.GetComponent<UILineConnector>();
         connector.transforms = new RectTransform[] { start.rect, end.rect };
-        connector.enabled = true;
+        connector.enabled = true;*/
 
         //line.transform.position = Vector3.zero;
     }

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b38bf8f79480a4ea1e52b83881ac78, type: 3}
+  m_Name: Algorithms and Data Strcutures 1
+  m_EditorClassIdentifier: 
+  number: 225
+  level: 3
+  subject: 1
+  description: 'Basic techniques for design, analysis, implementation of algorithms
+    and data structures. Foundations: Random access machine model, time and space
+    complexity, worst-case analysis, upper and lower bounds. Proof techniques for
+    algorithm correctness. Basic data structures: stacks, queues, linked lists. Sorting:
+    elementary sorting algorithms, mergesort, quicksort, priority queues. Searching:
+    Binary search trees, balanced search trees, hash tables. Graphs: undirected and
+    directed graphs, graph traversals and applications, topological sort. Algorithm
+    design techniques: greedy, backtracking, divide and conquer.'
+  prereqs:
+  - equivalent:
+    - {fileID: 11400000, guid: 616b28510649a664a9497f846abc6055, type: 2}
+    - {fileID: 11400000, guid: 5dbfbe6d49fb6a34f81558dc45e81ac9, type: 2}
+  mean:
+    attribute: 
+    score: 0
+    scoreMin: 0
+    scoreMax: 0
+  hoursPerWeek:
+    attribute: 
+    score: 0
+    scoreMin: 0
+    scoreMax: 0
+  difficulty:
+    attribute: 
+    score: 0
+    scoreMin: 0
+    scoreMax: 0
+  tags: []

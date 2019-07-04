@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b38bf8f79480a4ea1e52b83881ac78, type: 3}
+  m_Name: Database Systems
+  m_EditorClassIdentifier: 
+  number: 370
+  level: 4
+  subject: 1
+  description: "The use and operating principles of database management systems. Topics
+    include: data entities and relationships; data modelling using Entity-Relation
+    Diagrams: hierarchical, network and relational models of databases; query languages;
+    physical representation of data in secondary storage; relational algebra and calculus
+    as applied to the design of databases; security and integrity in the context of
+    concurrent use; and basic ethical issues associated with database design and use.\r"
+  prereqs:
+  - equivalent:
+    - {fileID: 11400000, guid: 10bbc37e9dcf2fd459e1208913c5ebd9, type: 2}
+    - {fileID: 11400000, guid: 0b8b7d8c738212f4e86dcfbe5c5b887f, type: 2}
+  mean:
+    attribute: 
+    score: 0
+    scoreMin: 0
+    scoreMax: 0
+  hoursPerWeek:
+    attribute: 
+    score: 0
+    scoreMin: 0
+    scoreMax: 0
+  difficulty:
+    attribute: 
+    score: 0
+    scoreMin: 0
+    scoreMax: 0
+  tags: []

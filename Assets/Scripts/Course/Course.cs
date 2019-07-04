@@ -34,7 +34,13 @@ public enum Subject
     CSC,
     MATH,
     SENG,
-    STAT
+    STAT,
+    ENGL,
+    ENGR,
+    MEDI,
+    PSYCH,
+    GREE,
+    PHIL
 }
 
 public enum Level

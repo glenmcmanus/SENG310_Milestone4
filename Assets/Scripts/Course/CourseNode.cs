@@ -13,6 +13,7 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public RectTransform rect;
     public RectTransform column;
     public int columnID;
+    public int rowID;
 
     private void Awake()
     {

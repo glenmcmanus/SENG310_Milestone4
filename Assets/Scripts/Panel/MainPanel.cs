@@ -10,6 +10,8 @@ public class MainPanel : MonoBehaviour
     public HoverDetails hoverDetails;
 
     public RectTransform rect;
+    public RectTransform sideRect;
+    public RectTransform topRect;
 
     public List<GameObject> content;
 

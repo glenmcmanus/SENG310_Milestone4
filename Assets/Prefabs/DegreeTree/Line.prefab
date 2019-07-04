@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Resolution: 0
   m_useNativeSize: 0
   m_points: []
-  lineThickness: 0.15
+  lineThickness: 3
   relativeSize: 1
   lineList: 0
   lineCaps: 0

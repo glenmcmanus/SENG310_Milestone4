@@ -12,13 +12,15 @@ namespace UnityEngine.UI.Extensions
         // The elements between which line segments should be drawn
         public RectTransform[] transforms;
         private Vector2[] previousPositions;
-        private RectTransform canvas;
+        public RectTransform canvas;
+        public bool overrideCanvas;
         private RectTransform rt;
         private UILineRenderer lr;
 
         private void Awake()
         {
-            canvas = GetComponentInParent<RectTransform>().GetParentCanvas().GetComponent<RectTransform>();
+            if(!overrideCanvas)
+                canvas = GetComponentInParent<RectTransform>().GetParentCanvas().GetComponent<RectTransform>();
 
             rt = GetComponent<RectTransform>();
             lr = GetComponent<UILineRenderer>();

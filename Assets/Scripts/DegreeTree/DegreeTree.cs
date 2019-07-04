@@ -77,6 +77,7 @@ public class DegreeTree : MonoBehaviour
             }
             else
             {
+                int columnID = 0;
                 bool skip = false;
                 foreach (Prereq prereq in c.prereqs)
                 {
@@ -85,7 +86,18 @@ public class DegreeTree : MonoBehaviour
                         Debug.Log(prereq.equivalent[i].name + " in tree?");
 
                         if (currentCourses.Contains(prereq.equivalent[i]))
+                        {
+                            foreach(CourseNode cn in nodes)
+                            {
+                                if(cn.course == prereq.equivalent[i])
+                                {
+                                    if (cn.columnID + 1 > columnID)
+                                        columnID = cn.columnID + 1;
+                                    break;
+                                }
+                            }
                             break;
+                        }
 
                         if (i == prereq.equivalent.Count - 1)
                             skip = true;
@@ -101,7 +113,7 @@ public class DegreeTree : MonoBehaviour
                 else
                 {
                     Debug.Log("Add " + c.name);
-                    AddNode(c, 1);
+                    AddNode(c, columnID);
                 }
             }
         }
@@ -219,12 +231,15 @@ public class DegreeTree : MonoBehaviour
     void DrawLine(CourseNode start, CourseNode end)
     {
         GameObject go = Instantiate(linePrefab.gameObject);
+        UILineConnector connector = go.GetComponent<UILineConnector>();
+        connector.canvas = content.GetComponent<RectTransform>();
+
 
         go.transform.SetParent(lineContainer.GetComponent<RectTransform>(), false);
 
         UILineRenderer line = go.GetComponent<UILineRenderer>();
         line.enabled = true;
-
+        /*
         Debug.Log(start.rect.position);
         
         Vector3 pos = start.rect.position - lineOffset;
@@ -234,11 +249,10 @@ public class DegreeTree : MonoBehaviour
         go.transform.position = pos;
 
         Vector2[] endpoints = new Vector2[] { new Vector2(0,0), new Vector2(columnOffset * end.columnID, courseHeight * end.rowID) };
-        line.Points = endpoints;
+        line.Points = endpoints;*/
 
-        /*UILineConnector connector = line.GetComponent<UILineConnector>();
         connector.transforms = new RectTransform[] { start.rect, end.rect };
-        connector.enabled = true;*/
+        connector.enabled = true;
 
         //line.transform.position = Vector3.zero;
     }

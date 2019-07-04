@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{595042AE-4AA3-A0FB-8B4B-1A33EBA7502A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -72,6 +73,7 @@
     <Compile Include="Assets\Scripts\HoverPreset.cs" />
     <Compile Include="Assets\Scripts\LevelToggle.cs" />
     <Compile Include="Assets\Scripts\Major.cs" />
+    <Compile Include="Assets\Scripts\mono_gmail.cs" />
     <Compile Include="Assets\Scripts\Panel\DegreeTree.cs" />
     <Compile Include="Assets\Scripts\Panel\MainPanel.cs" />
     <Compile Include="Assets\Scripts\Panel\SidePanel.cs" />

@@ -10,19 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25b38bf8f79480a4ea1e52b83881ac78, type: 3}
-  m_Name: Logic and Foundations
+  m_Name: Reading and Writing
   m_EditorClassIdentifier: 
-  number: 122
+  number: 135
   level: 2
-  subject: 2
-  description: Logic and quantifiers, basic set theory, mathematical induction and
-    recursive definitions, divide and conquer recurrence relations, properties of
-    integers, counting, functions and relations, countable and uncountable sets, asymptotic
-    notation.
-  prereqs:
-  - equivalent:
-    - {fileID: 11400000, guid: db793f804591db448a0e93fba6b37a7a, type: 2}
-    - {fileID: 11400000, guid: 59cf5a1be769be54ab08a244031a7362, type: 2}
+  subject: 5
+  description: Practice of skills needed for successful academic writing in a variety
+    of subject areas. Analysis of rhetorical, stylistic, research and documentation
+    techniques; development of these techniques through practical writing assignments.
+    Balance of lectures and discussion.
+  prereqs: []
   mean:
     attribute: 
     score: 0

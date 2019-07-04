@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{595042AE-4AA3-A0FB-8B4B-1A33EBA7502A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -68,6 +67,7 @@
     <Compile Include="Assets\Scripts\Course\CourseOffering.cs" />
     <Compile Include="Assets\Scripts\Course\CourseResult.cs" />
     <Compile Include="Assets\Scripts\Course\CourseSearch.cs" />
+    <Compile Include="Assets\Scripts\Course\Test.cs" />
     <Compile Include="Assets\Scripts\Foldout.cs" />
     <Compile Include="Assets\Scripts\HoverDetails.cs" />
     <Compile Include="Assets\Scripts\HoverPreset.cs" />

@@ -18,7 +18,7 @@ public class CourseDB : ScriptableObject
 [CustomEditor(typeof(CourseDB))]
 public class CourseDB_Editor : Editor
 {
-    CourseDB myTarget { get { return (CourseDB)target; } }
+    CourseDB db { get { return (CourseDB)target; } }
 
     public override void OnInspectorGUI()
     {

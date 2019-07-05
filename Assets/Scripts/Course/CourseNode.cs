@@ -9,7 +9,6 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 {
     public Course course;
     public Text title;
-    public HoverPreset hoverPreset;
     public RectTransform rect;
     public RectTransform column;
     public int columnID;
@@ -23,15 +22,15 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Mouse enter " + name);
+        //Debug.Log("Mouse enter " + name);
         MainPanel.instance.hoverDetails.SetDetails(course);
         MainPanel.instance.hoverDetails.gameObject.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("Mouse exit " + name);
-        StartCoroutine(DelayedDisable());
+        //Debug.Log("Mouse exit " + name);
+        //StartCoroutine(DelayedDisable());
     }
 
     IEnumerator DelayedDisable()

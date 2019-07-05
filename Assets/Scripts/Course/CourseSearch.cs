@@ -40,6 +40,7 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
         }
 
         instance = this;
+        offerings = new List<CourseOffering>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -42,6 +42,7 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
         }
 
         instance = this;
+        offerings = new List<CourseOffering>();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -75,37 +76,37 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
                 switch (d)
                 {
                     case Subject.CSC:
-                        Filter(courseDB.csc);
+                        Filter(courseDB.cscOffering);
                         break;
 
                     case Subject.MATH:
-                        Filter(courseDB.math);
+                        Filter(courseDB.mathOffering);
                         break;
 
                     case Subject.SENG:
-                        Filter(courseDB.seng);
+                        Filter(courseDB.sengOffering);
                         break;
 
                     case Subject.STAT:
-                        Filter(courseDB.stat);
+                        Filter(courseDB.statOffering);
                         break;
                     case Subject.ENGL:
-                        Filter(courseDB.engl);
+                        Filter(courseDB.englOffering);
                         break;
                     case Subject.ENGR:
-                        Filter(courseDB.engr);
+                        Filter(courseDB.engrOffering);
                         break;
                     case Subject.GREE:
-                        Filter(courseDB.gree);
+                        Filter(courseDB.greeOffering);
                         break;
                     case Subject.MEDI:
-                        Filter(courseDB.medi);
+                        Filter(courseDB.mediOffering);
                         break;
                     case Subject.PHIL:
-                        Filter(courseDB.phil);
+                        Filter(courseDB.philOffering);
                         break;
                     case Subject.PSYCH:
-                        Filter(courseDB.psych);
+                        Filter(courseDB.psychOffering);
                         break;
                 }
             }
@@ -113,10 +114,10 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
         else
         {
             //filter through all subjects
-            Filter(courseDB.csc);
-            Filter(courseDB.math);
-            Filter(courseDB.seng);
-            Filter(courseDB.stat);
+            Filter(courseDB.cscOffering);
+            Filter(courseDB.mathOffering);
+            Filter(courseDB.sengOffering);
+            Filter(courseDB.statOffering);
             Filter(courseDB.psych);
             Filter(courseDB.phil);
             Filter(courseDB.engl);

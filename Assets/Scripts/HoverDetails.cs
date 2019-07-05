@@ -5,12 +5,19 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Image))]
-public class HoverDetails : CourseDetails, IPointerEnterHandler, IPointerExitHandler
+public class HoverDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    public RectTransform rect;
+
+
+    public float offsetScale = 200f;
+
     public Image image;
     public List<CourseOffering> offerings = new List<CourseOffering>();
 
     [Header("Content")]
+    public Text courseText;
+    public Text descriptionText;
     public Semester semester = Semester.Fall;
     public Text semesterText;
     public Text sectionText;
@@ -26,12 +33,13 @@ public class HoverDetails : CourseDetails, IPointerEnterHandler, IPointerExitHan
     public Course currentCourse;
     public bool hasFocus;
     public HoverPreset preset;
+    public bool disableOnExit;
 
     int sectionIndex;
 
-    public override void Awake()
+    public void Awake()
     {
-        base.Awake();
+        rect = GetComponent<RectTransform>();
         semesterText.text = semester.ToString();
         contentSizeFitter = GetComponent<ContentSizeFitter>();
         verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
@@ -51,7 +59,7 @@ public class HoverDetails : CourseDetails, IPointerEnterHandler, IPointerExitHan
     {
         hasFocus = false;
         //offerings.Clear();
-        gameObject.SetActive(false);
+        gameObject.SetActive(!disableOnExit);
     }
 
     public void PopulateOfferings()
@@ -82,9 +90,18 @@ public class HoverDetails : CourseDetails, IPointerEnterHandler, IPointerExitHan
         SetDetails(offerings[sectionIndex]);
     }
 
+    public virtual void SetDetails(Course course)
+    {
+        courseText.text = course.subject + " " + course.number;
+        sectionText.text = "";
+        daysText.text = "";
+        timeText.text = "";
+        descriptionText.text = course.description;
+    }
+
     public void SetDetails(CourseOffering course)
     {
-        base.SetDetails(course.course);
+        SetDetails(course.course);
         sectionText.text = course.Section;
 
         if(course.days.Count > 0)
@@ -142,6 +159,22 @@ public class HoverDetails : CourseDetails, IPointerEnterHandler, IPointerExitHan
     public void SetPreset(HoverPreset preset)
     {
         this.preset = preset;
+
+        disableOnExit = preset.disableOnExit;
+
+        image.color = preset.colour;
+        image.sprite = preset.sprite;
+        image.type = preset.imageType;
+
+        contentSizeFitter.horizontalFit = preset.horizontalFit;
+        contentSizeFitter.verticalFit = preset.verticalFit;
+        verticalLayoutGroup.spacing = preset.spacing;
+
+        rect.anchorMin = preset.anchorMin;
+        rect.anchorMax = preset.anchorMax;
+
+        rect.offsetMax = Vector2.zero;
+        rect.offsetMin = Vector2.zero;
     }
 
     public void ShiftSectionIndex(int shift)

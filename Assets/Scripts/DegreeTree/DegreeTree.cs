@@ -6,6 +6,8 @@ using UnityEngine.UI.Extensions;
 
 public class DegreeTree : MonoBehaviour
 {
+    public HoverPreset hoverPreset;
+
     [Header("Major and courses")]
     public Major major;
     public List<Course> currentCourses;
@@ -43,6 +45,18 @@ public class DegreeTree : MonoBehaviour
     {
         if (!initialized)
             SetupTree();
+
+        MainPanel.instance.hoverDetails.transform.SetParent(MainPanel.instance.sideRect);
+        MainPanel.instance.hoverDetails.gameObject.SetActive(true);
+        MainPanel.instance.hoverDetails.SetPreset(hoverPreset);
+        MainPanel.instance.hoverDetails.SetDetails(major.firstYearCore[0]);
+        MainPanel.instance.rect.anchorMin *= 2;
+    }
+
+    private void OnDisable()
+    {
+        MainPanel.instance.hoverDetails.gameObject.SetActive(false);
+        MainPanel.instance.rect.anchorMin *= 0.5f;
     }
 
     public void SetupTree()

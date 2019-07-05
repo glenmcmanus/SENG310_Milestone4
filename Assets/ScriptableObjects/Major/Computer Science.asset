@@ -25,8 +25,13 @@ MonoBehaviour:
   firstYearCore:
   - {fileID: 11400000, guid: 4e9e3849255463a44b293292929f5817, type: 2}
   - {fileID: 11400000, guid: 616b28510649a664a9497f846abc6055, type: 2}
+  - {fileID: 11400000, guid: 59cf5a1be769be54ab08a244031a7362, type: 2}
+  - {fileID: 11400000, guid: db793f804591db448a0e93fba6b37a7a, type: 2}
   firstYearRecommended: []
-  secondYearCore: []
+  secondYearCore:
+  - {fileID: 11400000, guid: 0cd7b2e8d5cca6a4abec69c9127ade09, type: 2}
+  - {fileID: 11400000, guid: 10bbc37e9dcf2fd459e1208913c5ebd9, type: 2}
+  - {fileID: 11400000, guid: b43276749cf73a646822949f98630684, type: 2}
   secondYearRecommended: []
   thirdYearCore: []
   thirdYearRecommended: []

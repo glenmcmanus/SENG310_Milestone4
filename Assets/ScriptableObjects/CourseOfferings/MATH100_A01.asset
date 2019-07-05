@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 369e73aee7e0a384aae85c04774d0c80, type: 3}
-  m_Name: new_Course_Offering
+  m_Name: MATH100_A01
   m_EditorClassIdentifier: 
   course: {fileID: 0}
   Section: 

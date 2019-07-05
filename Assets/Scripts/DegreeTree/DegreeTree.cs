@@ -8,7 +8,7 @@ public class DegreeTree : MonoBehaviour
 {
     [Header("Major and courses")]
     public Major major;
-    public List<Course> current;
+    public List<Course> currentCourses;
     public List<Course> prereqs;
 
     [Header("Content")]
@@ -21,11 +21,16 @@ public class DegreeTree : MonoBehaviour
     public float thickness = 3f;
     public Vector2Int lineResolution = new Vector2Int(32, 32);
     public Color lineColour = Color.black;
+    public Vector3 lineOffset;
+    public float columnOffset;
+    public float courseHeight;
 
     [Header("Prefabs")]
     public GameObject treeColumn;
     public CourseNode courseNode;
     public UILineRenderer linePrefab;
+
+    List<Course> pending = new List<Course>();
 
     bool initialized;
 
@@ -53,27 +58,46 @@ public class DegreeTree : MonoBehaviour
         columns = new List<GameObject>();
         AddColumn(4);
 
-        List<Course> current = new List<Course>();
-        List<Course> pending = new List<Course>();
-        foreach(Course c in major.firstYearCore)
+        ProcessCourses(major.firstYearCore);
+        ProcessCourses(major.secondYearCore);
+        ProcessCourses(major.thirdYearCore);
+        ProcessCourses(major.fourthYearCore);
+
+        initialized = true;
+    }
+
+    public void ProcessCourses(List<Course> courseList)
+    {
+        foreach (Course c in courseList)
         {
-            if(c.prereqs.Count == 0)
+            if (c.prereqs.Count == 0)
             {
                 Debug.Log("Add " + c.name);
-                current.Add(c);
                 AddNode(c, 0);
             }
             else
             {
+                int columnID = 0;
                 bool skip = false;
-                foreach(Prereq prereq in c.prereqs)
+                foreach (Prereq prereq in c.prereqs)
                 {
-                    for(int i = 0; i < prereq.equivalent.Count; i++)
+                    for (int i = 0; i < prereq.equivalent.Count; i++)
                     {
                         Debug.Log(prereq.equivalent[i].name + " in tree?");
 
-                        if (current.Contains(prereq.equivalent[i]))
+                        if (currentCourses.Contains(prereq.equivalent[i]))
+                        {
+                            foreach(CourseNode cn in nodes)
+                            {
+                                if(cn.course == prereq.equivalent[i])
+                                {
+                                    if (cn.columnID + 1 > columnID)
+                                        columnID = cn.columnID + 1;
+                                    break;
+                                }
+                            }
                             break;
+                        }
 
                         if (i == prereq.equivalent.Count - 1)
                             skip = true;
@@ -89,7 +113,7 @@ public class DegreeTree : MonoBehaviour
                 else
                 {
                     Debug.Log("Add " + c.name);
-                    AddNode(c, 1);
+                    AddNode(c, columnID);
                 }
             }
         }
@@ -102,11 +126,11 @@ public class DegreeTree : MonoBehaviour
             foreach (Course c in pending)
             {
                 ResolvePrereqs();
-                current.Add(c);
+                currentCourses.Add(c);
                 removeMe.Add(c);
             }
 
-            foreach(Course c in removeMe)
+            foreach (Course c in removeMe)
             {
                 pending.Remove(c);
             }
@@ -117,15 +141,13 @@ public class DegreeTree : MonoBehaviour
 
         foreach (Course c in pending)
             Debug.Log(c.name + " pending");
-
-        initialized = true;
     }
 
     public void ResolvePrereqs()
     {
         foreach (Course p in prereqs)
         {
-            if (!current.Contains(p))
+            if (!currentCourses.Contains(p))
             {
                 if(p.prereqs.Count > 0)
                     ResolvePrereqs(p);
@@ -134,7 +156,7 @@ public class DegreeTree : MonoBehaviour
                     AddNode(p, 0);
                 }
 
-                current.Add(p);
+                currentCourses.Add(p);
             }
         }
     }
@@ -145,7 +167,7 @@ public class DegreeTree : MonoBehaviour
         {
             for (int i = 0; i < prereq.equivalent.Count; i++)
             {
-                if (!current.Contains(prereq.equivalent[i]))
+                if (!currentCourses.Contains(prereq.equivalent[i]))
                 {
                     if (prereq.equivalent[i].prereqs.Count == 0)
                     {
@@ -154,7 +176,7 @@ public class DegreeTree : MonoBehaviour
                     else
                         ResolvePrereqs(prereq.equivalent[i]);
 
-                    current.Add(prereq.equivalent[i]);
+                    currentCourses.Add(prereq.equivalent[i]);
                 }
             }
         }
@@ -181,12 +203,14 @@ public class DegreeTree : MonoBehaviour
     {
         CourseNode cn = Instantiate(courseNode);
         cn.SetCourse(course);
+        cn.rowID = columns[columnID].transform.childCount;
         cn.transform.SetParent(columns[columnID].transform, false);
         cn.column = columns[columnID].GetComponent<RectTransform>();
         cn.columnID = columnID;
         nodes.Add(cn);
+        currentCourses.Add(course);
 
-        if(cn.course.prereqs.Count > 0)
+        if (cn.course.prereqs.Count > 0)
         {
             foreach(Prereq prereq in cn.course.prereqs)
             {
@@ -207,17 +231,28 @@ public class DegreeTree : MonoBehaviour
     void DrawLine(CourseNode start, CourseNode end)
     {
         GameObject go = Instantiate(linePrefab.gameObject);
+        UILineConnector connector = go.GetComponent<UILineConnector>();
+        connector.canvas = content.GetComponent<RectTransform>();
+
 
         go.transform.SetParent(lineContainer.GetComponent<RectTransform>(), false);
 
         UILineRenderer line = go.GetComponent<UILineRenderer>();
         line.enabled = true;
-        Vector2[] endpoints = new Vector2[] { (Vector2)start.rect.position, (Vector2)end.rect.position };
-        line.Points = endpoints;
+        /*
+        Debug.Log(start.rect.position);
+        
+        Vector3 pos = start.rect.position - lineOffset;
 
-        /*UILineConnector connector = line.GetComponent<UILineConnector>();
+        Debug.Log(pos);
+
+        go.transform.position = pos;
+
+        Vector2[] endpoints = new Vector2[] { new Vector2(0,0), new Vector2(columnOffset * end.columnID, courseHeight * end.rowID) };
+        line.Points = endpoints;*/
+
         connector.transforms = new RectTransform[] { start.rect, end.rect };
-        connector.enabled = true;*/
+        connector.enabled = true;
 
         //line.transform.position = Vector3.zero;
     }

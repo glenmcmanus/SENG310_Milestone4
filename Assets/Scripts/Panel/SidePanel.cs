@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class SidePanel : Foldout
 {
-    public MainPanel mainPanel;
     public Foldout foldoutButton;
 
     private void Start()

@@ -13,9 +13,16 @@ public class CourseDB : ScriptableObject
     public List<CourseOffering> seng;
     public List<CourseOffering> math;
     public List<CourseOffering> stat;
+    public List<CourseOffering> engl;
+    public List<CourseOffering> engr;
+    public List<CourseOffering> gree;
+    public List<CourseOffering> medi;
+    public List<CourseOffering> phil;
+    public List<CourseOffering> psych;
 }
 
 [CustomEditor(typeof(CourseDB))]
+[ExecuteInEditMode]
 public class CourseDB_Editor : Editor
 {
     CourseDB db { get { return (CourseDB)target; } }

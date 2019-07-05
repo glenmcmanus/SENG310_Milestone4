@@ -87,6 +87,24 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
                     case Subject.STAT:
                         Filter(courseDB.stat);
                         break;
+                    case Subject.ENGL:
+                        Filter(courseDB.engl);
+                        break;
+                    case Subject.ENGR:
+                        Filter(courseDB.engr);
+                        break;
+                    case Subject.GREE:
+                        Filter(courseDB.gree);
+                        break;
+                    case Subject.MEDI:
+                        Filter(courseDB.medi);
+                        break;
+                    case Subject.PHIL:
+                        Filter(courseDB.phil);
+                        break;
+                    case Subject.PSYCH:
+                        Filter(courseDB.psych);
+                        break;
                 }
             }
         }

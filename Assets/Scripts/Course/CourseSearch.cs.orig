@@ -114,16 +114,23 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
         else
         {
             //filter through all subjects
-            Filter(courseDB.cscOffering);
-            Filter(courseDB.mathOffering);
-            Filter(courseDB.sengOffering);
-            Filter(courseDB.statOffering);
+<<<<<<< HEAD
+            Filter(courseDB.csc);
+            Filter(courseDB.math);
+            Filter(courseDB.seng);
+            Filter(courseDB.stat);
             Filter(courseDB.psych);
             Filter(courseDB.phil);
             Filter(courseDB.engl);
             Filter(courseDB.engr);
             Filter(courseDB.medi);
             Filter(courseDB.gree);
+=======
+            Filter(courseDB.cscOffering);
+            Filter(courseDB.mathOffering);
+            Filter(courseDB.sengOffering);
+            Filter(courseDB.statOffering);
+>>>>>>> 5336d42ce8b6021f6f283d63a483a6b186915507
         }
     }
 

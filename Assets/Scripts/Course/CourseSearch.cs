@@ -76,15 +76,12 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
                     case Subject.CSC:
                         Filter(courseDB.cscOffering);
                         break;
-
                     case Subject.MATH:
                         Filter(courseDB.mathOffering);
                         break;
-
                     case Subject.SENG:
                         Filter(courseDB.sengOffering);
                         break;
-
                     case Subject.STAT:
                         Filter(courseDB.statOffering);
                         break;
@@ -116,11 +113,19 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
             Filter(courseDB.mathOffering);
             Filter(courseDB.sengOffering);
             Filter(courseDB.statOffering);
+            Filter(courseDB.englOffering);
+            Filter(courseDB.engrOffering);
+            Filter(courseDB.greeOffering);
+            Filter(courseDB.mediOffering);
+            Filter(courseDB.philOffering);
+            Filter(courseDB.psychOffering);
         }
     }
 
     public void Filter(List<CourseOffering> subjectCourses)
     {
+        offerings.Clear();
+
         if (subjectCourses.Count <= 0)
         {
             //write a message?

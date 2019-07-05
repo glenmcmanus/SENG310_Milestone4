@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Text.RegularExpressions;
 
 public class CourseSearch : MonoBehaviour, IPointerEnterHandler
 {
@@ -18,6 +19,7 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
     [Header("Sidebar")]
     //do union / intersect for tags?
     public List<string> tags;
+    public GameObject keywordContentParent;
     public List<Subject> subjects;
     public List<Level> levels;
     public Semester semester;
@@ -115,6 +117,12 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
             Filter(courseDB.math);
             Filter(courseDB.seng);
             Filter(courseDB.stat);
+            Filter(courseDB.psych);
+            Filter(courseDB.phil);
+            Filter(courseDB.engl);
+            Filter(courseDB.engr);
+            Filter(courseDB.medi);
+            Filter(courseDB.gree);
         }
     }
 
@@ -156,6 +164,14 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
 
         //List<Course> courses = new List<Course>();
         //List<CourseOffering> offerings = new List<CourseOffering>();
+
+        List<GameObject> keywords = new List<GameObject>();
+
+        for(int i = 0; i < keywordContentParent.transform.childCount; i++)
+        {
+            keywords.Add(keywordContentParent.transform.GetChild(i).gameObject);
+        }
+
         foreach (CourseOffering c in subjectCourses)
         {
             if (c.semester != semester)
@@ -165,6 +181,7 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
                 continue;
 
             bool skip = true;
+            /*
             foreach (string t in tags)
             {
                 if (c.course.tags.Contains(t))
@@ -173,7 +190,16 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
                     break;
                 }
             }
-            if (skip && tags.Count > 0)
+            */
+            foreach(GameObject k in keywords)
+            {
+                if(Regex.IsMatch(k.GetComponent<Text>().text, c.course.description, RegexOptions.IgnoreCase))
+                {
+                    skip = false;
+                    break;
+                }
+            }
+            if (skip && keywords.Count > 0)
                 continue;
 
             if(!courses.Contains(c.course))

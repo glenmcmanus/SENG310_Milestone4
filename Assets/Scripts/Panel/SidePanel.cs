@@ -5,7 +5,25 @@ using UnityEngine.UI;
 
 public class SidePanel : Foldout
 {
+    public static SidePanel instance;
+
+    [Header("Side Panel")]
+    public RectTransform subjectContainer;
+    public RectTransform levelContainer;
+    public RectTransform keywordContainer;
+
     public Foldout foldoutButton;
+
+    private void Awake()
+    {
+        if(instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+    }
 
     private void Start()
     {
@@ -50,5 +68,35 @@ public class SidePanel : Foldout
             text.text = "Hide";
         else
             text.text = "Show";
+    }
+
+    public void SetSubjects(List<Subject> subjects)
+    {
+        for(int i = 0; i < subjectContainer.childCount; i++)
+        {
+            if(subjects.Contains(subjectContainer.GetChild(i).GetComponent<SubjectToggle>().subject))
+                subjectContainer.GetChild(i).GetComponent<Toggle>().isOn = true;
+            else
+                subjectContainer.GetChild(i).GetComponent<Toggle>().isOn = false;
+        }
+    }
+
+    public void SetLevels(List<Level> levels)
+    {
+        for (int i = 0; i < levelContainer.childCount; i++)
+        {
+            if (levels.Contains(levelContainer.GetChild(i).GetComponent<LevelToggle>().level))
+                levelContainer.GetChild(i).GetComponent<Toggle>().isOn = true;
+            else
+                levelContainer.GetChild(i).GetComponent<Toggle>().isOn = false;
+        }
+    }
+
+    public void ClearKeywords()
+    {
+        for(int i = keywordContainer.childCount - 1; i >= 0; i--)
+        {
+            Destroy(keywordContainer.GetChild(i));
+        }
     }
 }

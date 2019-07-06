@@ -76,6 +76,8 @@ public class CourseDB_Editor : Editor
             db.ClearDB();
             PopulateCourses();
             PopulateOfferings();
+
+            EditorUtility.SetDirty(db);
         }
 
         EditorGUILayout.Space();

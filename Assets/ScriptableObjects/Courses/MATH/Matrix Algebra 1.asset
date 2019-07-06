@@ -24,6 +24,7 @@ MonoBehaviour:
   - equivalent:
     - {fileID: 11400000, guid: db793f804591db448a0e93fba6b37a7a, type: 2}
     - {fileID: 11400000, guid: 59cf5a1be769be54ab08a244031a7362, type: 2}
+  - equivalent:
     - {fileID: 11400000, guid: 5dbfbe6d49fb6a34f81558dc45e81ac9, type: 2}
   mean:
     attribute: 

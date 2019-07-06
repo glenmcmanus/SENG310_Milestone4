@@ -10,7 +10,7 @@ public class CourseResult : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public CourseOffering course;
     public Text title;
     public ResultColumn column;
-    //public HoverPreset hoverPreset;
+    public Button addToDT;
 
     public void Initialize(CourseOffering course)
     {
@@ -47,5 +47,10 @@ public class CourseResult : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         MainPanel.instance.hoverDetails.ClearDetails();
         MainPanel.instance.hoverDetails.ClearSpacer();
+    }
+
+    public void AddToDegreeTree()
+    {
+
     }
 }

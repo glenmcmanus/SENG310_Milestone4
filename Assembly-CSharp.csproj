@@ -68,6 +68,8 @@
     <Compile Include="Assets\Scripts\Course\CourseResult.cs" />
     <Compile Include="Assets\Scripts\Course\CourseSearch.cs" />
     <Compile Include="Assets\Scripts\DegreeTree\DegreeTree.cs" />
+    <Compile Include="Assets\Scripts\DegreeTree\ElectiveNode.cs" />
+    <Compile Include="Assets\Scripts\DegreeTree\OneOfNode.cs" />
     <Compile Include="Assets\Scripts\DegreeTree\TreeColumn.cs" />
     <Compile Include="Assets\Scripts\Foldout.cs" />
     <Compile Include="Assets\Scripts\HoverDetails.cs" />

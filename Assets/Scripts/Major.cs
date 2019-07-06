@@ -7,6 +7,8 @@ public class Major : ScriptableObject
 {
     public List<Elective> electives;
 
+    public List<Prereq> oneOf;
+
     [Header("First Year")]
     public List<Course> firstYearCore;
     public List<Course> firstYearRecommended;
@@ -22,12 +24,4 @@ public class Major : ScriptableObject
     [Header("Fourth Year")]
     public List<Course> fourthYearCore;
     public List<Course> fourthYearRecommended;
-}
-
-[System.Serializable]
-public class Elective
-{
-    public Subject subject;
-    public Level level;
-    public int count;
 }

@@ -13,27 +13,57 @@ MonoBehaviour:
   m_Name: Computer Science
   m_EditorClassIdentifier: 
   electives:
-  - subject: 0
-    level: 0
+  - subject: 00000000
+    level: 00000000
+    count: 11
+  - subject: 01000000
+    level: 04000000
     count: 3
-  - subject: 1
-    level: 4
-    count: 3
-  - subject: 1
-    level: 5
-    count: 3
+  - subject: 01000000
+    level: 05000000
+    count: 2
+  - subject: 0100000003000000
+    level: 04000000
+    count: 2
+  - subject: 0100000003000000
+    level: 05000000
+    count: 2
+  - subject: 00000000
+    level: 0400000005000000
+    count: 4
+  oneOf:
+  - equivalent:
+    - {fileID: 11400000, guid: d574faf99dfb7db49b6d97dc8715a63c, type: 2}
+    - {fileID: 11400000, guid: cf1fb1ef0345dac458168322feb12508, type: 2}
+    - {fileID: 11400000, guid: f784be9a6563a6248bac277589f5c223, type: 2}
+  - equivalent:
+    - {fileID: 11400000, guid: 59cf5a1be769be54ab08a244031a7362, type: 2}
+    - {fileID: 11400000, guid: db793f804591db448a0e93fba6b37a7a, type: 2}
+  - equivalent:
+    - {fileID: 11400000, guid: 3f207cb7e7522c24e8627e2791209461, type: 2}
+    - {fileID: 11400000, guid: 64fd1fa18f655e141891c34c0a4e0bdf, type: 2}
+  - equivalent:
+    - {fileID: 11400000, guid: a056b5638d4cdab4caab9a1e97ec6fbc, type: 2}
+    - {fileID: 11400000, guid: 4b9cad08b3f658c4a8ebfd0c8b1d0d96, type: 2}
   firstYearCore:
   - {fileID: 11400000, guid: 4e9e3849255463a44b293292929f5817, type: 2}
   - {fileID: 11400000, guid: 616b28510649a664a9497f846abc6055, type: 2}
-  - {fileID: 11400000, guid: 59cf5a1be769be54ab08a244031a7362, type: 2}
-  - {fileID: 11400000, guid: db793f804591db448a0e93fba6b37a7a, type: 2}
+  - {fileID: 11400000, guid: b43276749cf73a646822949f98630684, type: 2}
+  - {fileID: 11400000, guid: 5dbfbe6d49fb6a34f81558dc45e81ac9, type: 2}
+  - {fileID: 11400000, guid: f00432c67074559419f328491b803c94, type: 2}
   firstYearRecommended: []
   secondYearCore:
   - {fileID: 11400000, guid: 0cd7b2e8d5cca6a4abec69c9127ade09, type: 2}
   - {fileID: 11400000, guid: 10bbc37e9dcf2fd459e1208913c5ebd9, type: 2}
-  - {fileID: 11400000, guid: b43276749cf73a646822949f98630684, type: 2}
+  - {fileID: 11400000, guid: 0b8b7d8c738212f4e86dcfbe5c5b887f, type: 2}
+  - {fileID: 11400000, guid: cdd52cf1f4f43384485fa57ca5ec1840, type: 2}
+  - {fileID: 11400000, guid: 887ae59bd40f2434fb8dee435a66c357, type: 2}
+  - {fileID: 11400000, guid: f3b2b5c687613a14bbc66f19ed02814f, type: 2}
   secondYearRecommended: []
-  thirdYearCore: []
+  thirdYearCore:
+  - {fileID: 11400000, guid: 0419f7f9f59d9c448b52c524b18e6355, type: 2}
+  - {fileID: 11400000, guid: 9813cf7aeeba69c4cb22383c6e00fbf9, type: 2}
+  - {fileID: 11400000, guid: 92180f5515c6d854e955c0bf1756494c, type: 2}
   thirdYearRecommended: []
   fourthYearCore: []
   fourthYearRecommended: []

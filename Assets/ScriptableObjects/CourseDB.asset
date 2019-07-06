@@ -12,10 +12,80 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b781064c59beb4fbec449ee99f90e2, type: 3}
   m_Name: CourseDB
   m_EditorClassIdentifier: 
-  csc:
+  cscOffering:
+  - {fileID: 11400000, guid: 97a802461c2930e49b2d6c8d4a28755b, type: 2}
   - {fileID: 11400000, guid: 89b0bf0820de2d548bf5b04263ddec31, type: 2}
   - {fileID: 11400000, guid: 961bb52cad2703e49af45588b12ce051, type: 2}
   - {fileID: 11400000, guid: ccb6650792fe98e4ba73a3d265c54ceb, type: 2}
-  seng: []
-  math: []
-  stat: []
+  - {fileID: 11400000, guid: adb8cc302b6535a4aa34c1862c223d2e, type: 2}
+  - {fileID: 11400000, guid: 961f7baec8367ac47b1d3b510586e408, type: 2}
+  - {fileID: 11400000, guid: 8ee6dec28332c4c4a9bcf02a508a310c, type: 2}
+  - {fileID: 11400000, guid: 9a75159e58fe07745924dd274afbb136, type: 2}
+  sengOffering:
+  - {fileID: 11400000, guid: 74c408c1fc7255e40b49a267c91ffaff, type: 2}
+  mathOffering:
+  - {fileID: 11400000, guid: a9374f112130e9545a806a9513c457f0, type: 2}
+  - {fileID: 11400000, guid: 66fb034140f9ade44993d01d9f9531bc, type: 2}
+  - {fileID: 11400000, guid: 1abd0e79d9e76f44db943a82f3490a49, type: 2}
+  - {fileID: 11400000, guid: 41829c26b44cb85489948c67289bde4e, type: 2}
+  - {fileID: 11400000, guid: ed4313471dbcf2c4fb009342a6cb93d2, type: 2}
+  - {fileID: 11400000, guid: 06af797ec725467449e0957199518fce, type: 2}
+  - {fileID: 11400000, guid: a17f5a1873643dc45a81f4998189a7b6, type: 2}
+  - {fileID: 11400000, guid: 609caa72659ef1d44ba664d3900cad76, type: 2}
+  statOffering:
+  - {fileID: 11400000, guid: c62fb8d4d5d5eb049b851b96ba60a26a, type: 2}
+  - {fileID: 11400000, guid: 3346b70d650ea9a4f96c361e23fb544a, type: 2}
+  englOffering:
+  - {fileID: 11400000, guid: cb2a9a04c7542f34ca94e8bd8dd921ac, type: 2}
+  - {fileID: 11400000, guid: d2408ae150788f54c8cd47e25e0ec5cb, type: 2}
+  - {fileID: 11400000, guid: 22cc152a9dca50846a9842a5b3d1d83c, type: 2}
+  engrOffering:
+  - {fileID: 11400000, guid: ae89c0a04f6e81c4aa8e427663fa49a6, type: 2}
+  greeOffering:
+  - {fileID: 11400000, guid: 38fc797cd7374ae44bb3c338c817ee80, type: 2}
+  mediOffering:
+  - {fileID: 11400000, guid: 837eefb1b1701ef49b44aeb47426677b, type: 2}
+  philOffering:
+  - {fileID: 11400000, guid: 2056ad97d31863b429c7584c0c3100e1, type: 2}
+  - {fileID: 11400000, guid: 3ad3eab9da13f39419ec4e68d1c21c1a, type: 2}
+  psychOffering:
+  - {fileID: 11400000, guid: 120379a1fa750c84f810d00d70ac91a1, type: 2}
+  cscCourse:
+  - {fileID: 11400000, guid: 0cd7b2e8d5cca6a4abec69c9127ade09, type: 2}
+  - {fileID: 11400000, guid: 10bbc37e9dcf2fd459e1208913c5ebd9, type: 2}
+  - {fileID: 11400000, guid: 9813cf7aeeba69c4cb22383c6e00fbf9, type: 2}
+  - {fileID: 11400000, guid: 0419f7f9f59d9c448b52c524b18e6355, type: 2}
+  - {fileID: 11400000, guid: 4e9e3849255463a44b293292929f5817, type: 2}
+  - {fileID: 11400000, guid: 616b28510649a664a9497f846abc6055, type: 2}
+  - {fileID: 11400000, guid: 887ae59bd40f2434fb8dee435a66c357, type: 2}
+  - {fileID: 11400000, guid: 92180f5515c6d854e955c0bf1756494c, type: 2}
+  - {fileID: 11400000, guid: f00432c67074559419f328491b803c94, type: 2}
+  sengCourse:
+  - {fileID: 11400000, guid: 0b8b7d8c738212f4e86dcfbe5c5b887f, type: 2}
+  mathCourse:
+  - {fileID: 11400000, guid: db793f804591db448a0e93fba6b37a7a, type: 2}
+  - {fileID: 11400000, guid: b43276749cf73a646822949f98630684, type: 2}
+  - {fileID: 11400000, guid: f77c3c6d666c8bc458ce137e1ba40ae9, type: 2}
+  - {fileID: 11400000, guid: 64fd1fa18f655e141891c34c0a4e0bdf, type: 2}
+  - {fileID: 11400000, guid: 3f207cb7e7522c24e8627e2791209461, type: 2}
+  - {fileID: 11400000, guid: 59cf5a1be769be54ab08a244031a7362, type: 2}
+  - {fileID: 11400000, guid: 5dbfbe6d49fb6a34f81558dc45e81ac9, type: 2}
+  - {fileID: 11400000, guid: cdd52cf1f4f43384485fa57ca5ec1840, type: 2}
+  statCourse:
+  - {fileID: 11400000, guid: a056b5638d4cdab4caab9a1e97ec6fbc, type: 2}
+  - {fileID: 11400000, guid: 4b9cad08b3f658c4a8ebfd0c8b1d0d96, type: 2}
+  englCourse:
+  - {fileID: 11400000, guid: f784be9a6563a6248bac277589f5c223, type: 2}
+  - {fileID: 11400000, guid: cf1fb1ef0345dac458168322feb12508, type: 2}
+  - {fileID: 11400000, guid: d574faf99dfb7db49b6d97dc8715a63c, type: 2}
+  engrCourse:
+  - {fileID: 11400000, guid: f3b2b5c687613a14bbc66f19ed02814f, type: 2}
+  greeCourse:
+  - {fileID: 11400000, guid: 0cf08de63c12ecb47ba4e9049801af9e, type: 2}
+  mediCourse:
+  - {fileID: 11400000, guid: 960a4a13993f29e4cb6dd1bd8f18b8d1, type: 2}
+  philCourse:
+  - {fileID: 11400000, guid: b69b215b4526a6442a4dba1e41aa1b44, type: 2}
+  - {fileID: 11400000, guid: 2b267311e55a6d443b4c2b30bc544b2c, type: 2}
+  psychCourse:
+  - {fileID: 11400000, guid: 0dc360e9899282d4ab0cf168037a5b19, type: 2}

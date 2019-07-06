@@ -14,6 +14,7 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
     public HoverPreset hoverPreset;
 
     [Header("CurrentResults")]
+    public List<CourseResult> results;
     public List<CourseOffering> offerings;
     public List<Course> courses;
 
@@ -75,7 +76,36 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
             Destroy(columnSpace.transform.GetChild(i).gameObject);
         }
 
-        if(subjects.Count > 0)
+        if (semesterGroup.AnyTogglesOn())
+        {
+            foreach (Toggle t in semesterGroup.ActiveToggles())
+            {
+                if (t.name == "Fall")
+                {
+                    semester = Semester.Fall;
+                }
+                else if (t.name == "Spring")
+                {
+                    semester = Semester.Spring;
+                }
+                else if (t.name == "Summer")
+                {
+                    semester = Semester.Summer;
+                }
+                else
+                {
+                    Debug.LogWarning("There are no active semester toggles?!");
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("no toggles on!");
+            //show message to choose semester
+            return;
+        }
+
+        if (subjects.Count > 0)
         {
             //pre-filter by department for department specific columns
             foreach (Subject d in subjects)
@@ -135,6 +165,14 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
             spacing = 0;
 
         columnSpace.GetComponent<HorizontalLayoutGroup>().spacing = spacing;
+
+        foreach(CourseResult cr in results)
+        {
+            if(DegreeTree.instance.currentCourses.Contains(cr.course.course))
+            {
+                cr.addToDT.interactable = false;
+            }
+        }
     }
 
     public void Filter(List<CourseOffering> subjectCourses)
@@ -143,37 +181,7 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
 
         if (subjectCourses.Count <= 0)
         {
-            Debug.Log("No courses for subject :(");
-            //write a message?
-            return;
-        }
-
-        if(semesterGroup.AnyTogglesOn())
-        {
-            foreach (Toggle t in semesterGroup.ActiveToggles())
-            {
-                if (t.name == "Fall")
-                {
-                    semester = Semester.Fall;
-                }
-                else if (t.name == "Spring")
-                {
-                    semester = Semester.Spring;
-                }
-                else if (t.name == "Summer")
-                {
-                    semester = Semester.Summer;
-                }
-                else
-                {
-                    Debug.LogWarning("There are no active semester toggles?!");
-                }
-            }
-        }
-        else
-        {
-            Debug.Log("no toggles on!");
-            //show message to choose semester
+            //Debug.Log("No courses for subject :(");
             return;
         }
 
@@ -233,6 +241,7 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
 
                 CourseResult cr = Instantiate(courseResult);
                 cr.transform.SetParent(rColumn.transform.GetChild(1).GetChild(0), false);
+                results.Add(cr);
 
                 cr.Initialize(c);
 

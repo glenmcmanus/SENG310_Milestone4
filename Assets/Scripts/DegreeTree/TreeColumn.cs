@@ -9,6 +9,5 @@ public class TreeColumn : MonoBehaviour
     public void AddNode(CourseNode node)
     {
         nodes.Add(node);
-
     }
 }

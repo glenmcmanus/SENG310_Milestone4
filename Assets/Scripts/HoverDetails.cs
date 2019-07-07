@@ -59,9 +59,19 @@ public class HoverDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerExit(PointerEventData eventData)
     {
         hasFocus = false;
-        //offerings.Clear();
-        gameObject.SetActive(!disableOnExit);
 
+        currentCourse = null;
+        StartCoroutine(DelayedDisable());
+    }
+
+    IEnumerator DelayedDisable()
+    {
+        yield return null;
+
+        if (currentCourse)
+            yield break;
+
+        gameObject.SetActive(!disableOnExit);
         ClearSpacer();
     }
 
@@ -163,28 +173,27 @@ public class HoverDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             rect.anchorMin = preset.anchorMin;
             rect.anchorMax = preset.anchorMax;
             transform.SetParent(course.column.transform, false);
+
+            rect.anchoredPosition = Vector3.zero;
         }
         else
         {
             hasFocus = true;
 
-            rect.anchorMin = new Vector2(CourseSearch.instance.hoverAnchorOffsets[CourseSearch.instance.columns.Count - 1]
-                                         + preset.anchorMin.x, preset.anchorMin.y);
-            rect.anchorMax = new Vector2(CourseSearch.instance.hoverAnchorOffsets[CourseSearch.instance.columns.Count - 1]
-                                         + preset.anchorMax.x, preset.anchorMax.y);
+            rect.anchorMin = preset.anchorMin;
+            rect.anchorMax = preset.anchorMax;
+            transform.SetParent(course.column.transform, false);
+
+            rect.anchoredPosition = new Vector3(-585, 0, 0);
 
             side = -1;
-
-            int id = CourseSearch.instance.columns.IndexOf(course.column.GetComponent<RectTransform>()) - 1;
-
-            transform.SetParent(CourseSearch.instance.columns[id], false);
         }
 
         currentCourse = course.course.course;
 
         for (int i = 0; i < (CourseSearch.instance.columns.Count >= 7 ? 2 : 1); i++)
         {
-            spacer.Add(Instantiate(new GameObject()).AddComponent<RectTransform>());
+            spacer.Add(new GameObject().AddComponent<RectTransform>());
             spacer[i].transform.SetParent(CourseSearch.instance.columnSpace.transform, false);
             spacer[i].transform.SetSiblingIndex(course.column.transform.GetSiblingIndex() + 1 + side);
         }

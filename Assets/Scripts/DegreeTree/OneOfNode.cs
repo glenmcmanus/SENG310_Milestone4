@@ -8,7 +8,7 @@ public class OneOfNode : MonoBehaviour
 {
     public RectTransform rect;
     public Vector2 toggleOffset;
-    List<CourseNode> courses = new List<CourseNode>();
+    public List<CourseNode> courses = new List<CourseNode>();
 
     public void AddCourse(Course course)
     {

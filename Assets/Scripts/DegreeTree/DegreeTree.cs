@@ -56,6 +56,9 @@ public class DegreeTree : MonoBehaviour
 
     private void OnEnable()
     {
+        if (!MainPanel.instance)
+            return;
+
         if (!initialized)
             SetupTree();
 
@@ -116,13 +119,33 @@ public class DegreeTree : MonoBehaviour
         foreach(Prereq o in oneOfs)
         {
             OneOfNode oNode = Instantiate(oneOfPrefab);
-            
-            foreach(Course c in o.equivalent)
+
+            List<CourseNode> prereqNodes = new List<CourseNode>();
+
+            int colID = 0;
+            foreach (Course c in o.equivalent)
             {
                 oNode.AddCourse(c);
+
+                int pId = ResolvePrereqs(c);
+                if (pId + 1 > colID)
+                    colID = pId + 1;
+
+                foreach(CourseNode cn in nodes)
+                {
+                    if (c == cn.course)
+                        prereqNodes.Add(cn);
+                }
             }
 
+            if (colID >= columns.Count)
+                AddColumn(colID - columns.Count + 1);
 
+            oNode.rect.SetParent(columns[colID].transform, false);
+            foreach(CourseNode cn in prereqNodes)
+            {
+                DrawLine(oNode.rect, cn.rect);
+            }
         }
     }
 
@@ -210,13 +233,19 @@ public class DegreeTree : MonoBehaviour
             if (!currentCourses.Contains(p))
             {
                 if(p.prereqs.Count > 0)
-                    ResolvePrereqs(p);
+                {
+                    int colId = ResolvePrereqs(p);
+                    if (colId < 0)
+                    {
+                        colId = 0;
+
+                        AddCourseNode(p, colId);
+                    }
+                }
                 else
                 {
                     AddCourseNode(p, 0);
                 }
-
-                //currentCourses.Add(p);
             }
         }
     }
@@ -235,8 +264,6 @@ public class DegreeTree : MonoBehaviour
                     {
                         AddCourseNode(p, 0);
                     }
-
-                    //currentCourses.Add(p);
                 }
             }
         }
@@ -249,7 +276,6 @@ public class DegreeTree : MonoBehaviour
     public int ResolvePrereqs(Course c)
     {
         int colId = -1;
-        bool resolved = true;
         foreach (Prereq prereq in c.prereqs)
         {
             for (int i = 0; i < prereq.equivalent.Count; i++)
@@ -264,23 +290,22 @@ public class DegreeTree : MonoBehaviour
                     else
                     {
                         int result = ResolvePrereqs(prereq.equivalent[i]);
-                        if (result < 0)
-                            resolved = false;
-                        else if (result > colId)
-                            colId = result;
+                        if (result >= 0)
+                        {
+                            if (result > colId)
+                                colId = result;
+
+                            if (colId < 0)
+                                colId = 0;
+
+                            AddCourseNode(prereq.equivalent[i], colId);
+                        }
                     }
-                    //currentCourses.Add(prereq.equivalent[i]);
                 }
             }
         }
 
-        if(resolved)
-        {
-            if (colId < 0)
-                colId = 0;
-
-            AddCourseNode(c, colId);
-        }
+        
 
         return colId;
     }
@@ -311,7 +336,7 @@ public class DegreeTree : MonoBehaviour
         cn.rowID = columns[columnID].transform.childCount;
         cn.transform.SetParent(columns[columnID].transform, false);
 
-        columns[columnID].GetComponent<VerticalLayoutGroup>().spacing += cn.rect.sizeDelta.y;
+        columns[columnID].GetComponent<VerticalLayoutGroup>().spacing += cn.rect.sizeDelta.y * 1.5f;
 
         cn.column = columns[columnID].GetComponent<RectTransform>();
         cn.columnID = columnID;
@@ -328,7 +353,7 @@ public class DegreeTree : MonoBehaviour
                     {
                         if (node.course == c)
                         {
-                            DrawLine(node, cn);
+                            DrawLine(node.rect, cn.rect);
                         }
                     }
                 }
@@ -336,7 +361,7 @@ public class DegreeTree : MonoBehaviour
         }
     }
 
-    void DrawLine(CourseNode start, CourseNode end)
+    void DrawLine(RectTransform start, RectTransform end)
     {
         GameObject go = Instantiate(linePrefab.gameObject);
         UILineConnector connector = go.GetComponent<UILineConnector>();
@@ -347,7 +372,7 @@ public class DegreeTree : MonoBehaviour
         UILineRenderer line = go.GetComponent<UILineRenderer>();
         line.enabled = true;
 
-        connector.transforms = new RectTransform[] { start.rect, end.rect };
+        connector.transforms = new RectTransform[] { start, end };
         connector.enabled = true;
     }
 }

@@ -13,6 +13,8 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
 
     public HoverPreset hoverPreset;
 
+    public DegreeTree degreeTree;
+
     [Header("CurrentResults")]
     public List<CourseResult> results;
     public List<CourseOffering> offerings;
@@ -30,7 +32,6 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
     public GameObject columnSpace;
     public GameObject prompt;
     public List<RectTransform> columns = new List<RectTransform>();
-    public float[] hoverAnchorOffsets = new float[10] { 0, 0, .56f, .5f, .4f, .35f, .25f, .15f, .15f, .15f };
 
     [Header("Prefabs")]
     public ResultColumn column;
@@ -61,6 +62,9 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
 
     public void FindCourses()
     {
+        if (!DegreeTree.instance)
+            degreeTree.gameObject.SetActive(true);
+
         prompt.SetActive(false);
         MainPanel.instance.hoverDetails.transform.SetParent(MainPanel.instance.transform);
 

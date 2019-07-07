@@ -16,6 +16,7 @@ public class ElectiveNode : MonoBehaviour
 
     [Header("Assigned")]
     public RectTransform assignedContainer;
+    public Button removeCourseButton;
 
     public void FindElective()
     {
@@ -54,8 +55,10 @@ public class ElectiveNode : MonoBehaviour
         course = Instantiate(DegreeTree.instance.courseNode);
         course.SetCourse(c);
 
-        course.transform.SetParent(rect, false);
-        unassignedContainer.gameObject.SetActive(false);
+        DegreeTree.instance.currentCourses.Add(c);
+
+        course.transform.SetParent(assignedContainer, false);
+        removeCourseButton.interactable = true;
     }
 
     public void RemoveCourse()
@@ -116,8 +119,10 @@ public class ElectiveNode : MonoBehaviour
         }
 
         //remove node from list in DegreeTree
+
+        DegreeTree.instance.currentCourses.Remove(course.course);
         Destroy(course.gameObject);
-        unassignedContainer.gameObject.SetActive(true);
+        removeCourseButton.interactable = false;
     }
 }
 

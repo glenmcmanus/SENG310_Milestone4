@@ -60,6 +60,8 @@ public class CourseDB : ScriptableObject
     }
 }
 
+#if UNITY_EDITOR
+
 [CustomEditor(typeof(CourseDB))]
 public class CourseDB_Editor : Editor
 {
@@ -201,6 +203,7 @@ public class CourseDB_Editor : Editor
                             {
                                 Debug.Log(co.name + "  course resolved: " + c.name);
                                 co.course = c;
+                                EditorUtility.SetDirty(co);
                                 break;
                             }
                         }
@@ -314,3 +317,5 @@ public class CourseDB_Editor : Editor
         }
     }
 }
+
+#endif

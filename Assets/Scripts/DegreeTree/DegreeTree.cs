@@ -133,7 +133,7 @@ public class DegreeTree : MonoBehaviour
 
                 foreach(CourseNode cn in nodes)
                 {
-                    if (c == cn.course)
+                    if (c == cn.course && !prereqNodes.Contains(cn))
                         prereqNodes.Add(cn);
                 }
             }
@@ -252,6 +252,7 @@ public class DegreeTree : MonoBehaviour
 
     public void ResolvePrereqs(ElectiveNode elec)
     {
+        int columnID = 0;
         foreach (Prereq prereq in elec.course.course.prereqs)
         {
             foreach(Course p in prereq.equivalent)
@@ -259,7 +260,13 @@ public class DegreeTree : MonoBehaviour
                 if (!currentCourses.Contains(p))
                 {
                     if (p.prereqs.Count > 0)
-                        ResolvePrereqs(p);
+                    {
+                        int colId = ResolvePrereqs(p);
+                        if (colId + 1 > columnID)
+                            columnID = colId + 1;
+
+                        AddCourseNode(p, colId);
+                    }
                     else
                     {
                         AddCourseNode(p, 0);
@@ -284,7 +291,6 @@ public class DegreeTree : MonoBehaviour
                 {
                     if (prereq.equivalent[i].prereqs.Count == 0)
                     {
-
                         AddCourseNode(prereq.equivalent[i], 0);
                     }
                     else
@@ -304,8 +310,6 @@ public class DegreeTree : MonoBehaviour
                 }
             }
         }
-
-        
 
         return colId;
     }

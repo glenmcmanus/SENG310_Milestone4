@@ -127,10 +127,31 @@ public class CourseResult : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         else if (any)
             any.SetCourse(course.course);
         else
+        {
             Debug.Log("No elective nodes available to add course " + course.course.name + " to degree tree");
+
+            MessageBox mb = MainPanel.instance.messageBox;
+
+            mb.SetText("Elective Capacity Reached",
+                       "Your program doesn't require any electives beyond what is currently in your degree tree." +
+                       " Would you like to add " + course.course.name + " to your degree tree anyway?");
+
+            mb.yesButton.onClick.RemoveAllListeners();
+            mb.yesButton.onClick.AddListener(ForceAddCourse);
+
+            mb.cancelButton.onClick.RemoveAllListeners();
+            mb.cancelButton.onClick.AddListener(mb.HideBox);
+            return;
+        }
 
         addToDT.gameObject.SetActive(false);
         removeFromDT.gameObject.SetActive(true);
+    }
+
+    public void ForceAddCourse()
+    {
+        int colID = DegreeTree.instance.ResolvePrereqs(course.course);
+        //add elective to tree
     }
 
     public void RemoveFromDegreeTree()
@@ -140,6 +161,8 @@ public class CourseResult : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             if (course.course == en.course)
             {
                 en.RemoveCourse();
+                addToDT.gameObject.SetActive(true);
+                removeFromDT.gameObject.SetActive(false);
                 return;
             }
         }

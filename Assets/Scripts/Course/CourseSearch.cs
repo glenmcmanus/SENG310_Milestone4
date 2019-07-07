@@ -174,7 +174,8 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
         {
             if(DegreeTree.instance.currentCourses.Contains(cr.course.course))
             {
-                cr.addToDT.interactable = false;
+                if(cr.addToDT != null)
+                    cr.addToDT.interactable = false;
             }
         }
     }

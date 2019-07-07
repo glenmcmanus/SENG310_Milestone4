@@ -7,6 +7,7 @@ public class MainPanel : MonoBehaviour
 {
     public static MainPanel instance;
 
+    public MessageBox messageBox;
     public HoverDetails hoverDetails;
 
     public RectTransform rect;

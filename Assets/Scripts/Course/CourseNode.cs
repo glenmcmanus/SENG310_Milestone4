@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(RectTransform))]
@@ -13,6 +14,8 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public RectTransform column;
     public int columnID;
     public int rowID;
+    public List<CourseNode> equivalent = new List<CourseNode>();
+    public List<UILineRenderer> connectingLine = new List<UILineRenderer>();
 
     private void Awake()
     {
@@ -25,12 +28,42 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         //Debug.Log("Mouse enter " + name);
         MainPanel.instance.hoverDetails.SetDetails(course);
         MainPanel.instance.hoverDetails.gameObject.SetActive(true);
+
+        if(equivalent.Count == 0)
+        {
+            foreach (UILineRenderer line in connectingLine)
+                line.color = DegreeTree.instance.lineHighlight;
+        }
+        else
+        {
+            OneOfNode on = transform.parent.GetComponent<OneOfNode>();
+            if(on != null)
+            {
+                foreach (UILineRenderer line in on.connectingLine)
+                    line.color = DegreeTree.instance.lineHighlight;
+            }
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         //Debug.Log("Mouse exit " + name);
         //StartCoroutine(DelayedDisable());
+
+        if (equivalent.Count == 0)
+        {
+            foreach (UILineRenderer line in connectingLine)
+                line.color = DegreeTree.instance.lineColour;
+        }
+        else
+        {
+            OneOfNode on = transform.parent.GetComponent<OneOfNode>();
+            if (on != null)
+            {
+                foreach (UILineRenderer line in on.connectingLine)
+                    line.color = DegreeTree.instance.lineColour;
+            }
+        }
     }
 
     IEnumerator DelayedDisable()

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UI.Extensions;
 
 [RequireComponent(typeof(ToggleGroup))]
 public class OneOfNode : MonoBehaviour
 {
     public RectTransform rect;
+    public Toggle togglePrefab;
     public Vector2 toggleOffset;
     public List<CourseNode> courses = new List<CourseNode>();
+    public List<UILineRenderer> connectingLine = new List<UILineRenderer>();
 
     public void AddCourse(Course course)
     {
@@ -18,7 +21,7 @@ public class OneOfNode : MonoBehaviour
         cn.SetCourse(course);
         courses.Add(cn);
 
-        Toggle t = Instantiate(new GameObject()).AddComponent<Toggle>();
+        Toggle t = Instantiate(togglePrefab);
         t.transform.SetParent(cn.transform, false);
         t.transform.position += (Vector3)toggleOffset;
         t.group = GetComponent<ToggleGroup>();

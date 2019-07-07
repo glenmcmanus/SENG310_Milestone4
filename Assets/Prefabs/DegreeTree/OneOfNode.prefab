@@ -221,4 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rect: {fileID: 3225936914758481133}
-  toggleOffset: {x: -155, y: 0}
+  togglePrefab: {fileID: 533486176216080539, guid: 3c79158dd27331d4ab373828f483b96a,
+    type: 3}
+  toggleOffset: {x: -158, y: 0}
+  courses: []

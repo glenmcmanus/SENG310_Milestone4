@@ -1,22 +1,26 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class MessageBox : MonoBehaviour
 {
-    public string titleContent;
-    public string messageContent;
+    public Text title;
+    public Text message;
 
-    public GameObject title;
-    public GameObject message;
+    public Button yesButton;
+    public Button cancelButton;
 
-    public GameObject yesButton;
-    public GameObject cancelButton;
-
-    private void Awake()
+    public void SetText(string title, string message)
     {
-        title.GetComponent<Text>().text = titleContent;
-        message.GetComponent<Text>().text = messageContent;
+        this.title.text = title;
+        this.message.text = message;
+    }
+
+    public void HideBox()
+    {
+        gameObject.SetActive(false);
     }
 }

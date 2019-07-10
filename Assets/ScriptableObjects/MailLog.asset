@@ -13,6 +13,40 @@ MonoBehaviour:
   m_Name: MailLog
   m_EditorClassIdentifier: 
   sender: uvic.blue.jam@gmail.com
-  pass: seng310group
+  pass: uicdefqqrcxhpanp
   recipient: glen.don.mcmanus@gmail.com
-  log: BreadCrumbLineBreadCrumbLineBreadCrumbLineBreadCrumbLineBreadCrumbLineBreadCrumbLineBreadCrumbLineBreadCrumbLine
+  log: '
+
+    PrototypeSurvey
+
+    0 > Question (UnityEngine.UI.Text)
+
+    >> < 30 minutes
+
+
+    Time since app start: 11.15133
+
+
+
+    PrototypeSurvey
+
+    0 > Question (UnityEngine.UI.Text)
+
+    >> < 30 minutes
+
+
+    Time since app start: 381.7692
+
+
+
+    PrototypeSurvey
+
+    0 > Question (UnityEngine.UI.Text)
+
+    >> < 30 minutes
+
+
+    Time since app start: 387.6183
+
+
+'

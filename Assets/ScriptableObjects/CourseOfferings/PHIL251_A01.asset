@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 369e73aee7e0a384aae85c04774d0c80, type: 3}
   m_Name: PHIL251_A01
   m_EditorClassIdentifier: 
-  course: {fileID: 0}
+  course: {fileID: 11400000, guid: 2b267311e55a6d443b4c2b30bc544b2c, type: 2}
   Section: 
   semester: 0
   days: 

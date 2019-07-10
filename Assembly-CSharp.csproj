@@ -84,6 +84,9 @@
     <Compile Include="Assets\Scripts\RadarChart.cs" />
     <Compile Include="Assets\Scripts\ResultColumn.cs" />
     <Compile Include="Assets\Scripts\SubjectToggle.cs" />
+    <Compile Include="Assets\Scripts\Survey\Survey.cs" />
+    <Compile Include="Assets\Scripts\Survey\SurveyFrame.cs" />
+    <Compile Include="Assets\Scripts\Survey\SurveyQuestion.cs" />
     <Compile Include="Assets\Scripts\Tooltip.cs" />
     <Compile Include="Assets\unity-ui-extensions\Examples\ComboBox\ComboBoxChanged.cs" />
     <Compile Include="Assets\unity-ui-extensions\Examples\Cooldown\CooldownEffect_Image.cs" />

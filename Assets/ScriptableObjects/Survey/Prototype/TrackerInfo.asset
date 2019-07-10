@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d6ad1e0fdb8704d89d5f99ca3a714f, type: 3}
+  m_Name: TrackerInfo
+  m_EditorClassIdentifier: 
+  Question: Did you feel like you had all the information you needed to choose a course
+    to add to the degree tracker?
+  questionType: 0
+  responses:
+  - Yes
+  - No

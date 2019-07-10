@@ -85,5 +85,47 @@ namespace UnityEngine.UI.Extensions
                 previousPositions[i] = transforms[i].anchoredPosition;
             }
         }
+
+
+        public void UpdatePositions()
+        {
+            Vector2 thisPivot = rt.pivot;
+            Vector2 canvasPivot = canvas.pivot;
+
+            // Set up some arrays of coordinates in various reference systems
+            Vector3[] worldSpaces = new Vector3[transforms.Length];
+            Vector3[] canvasSpaces = new Vector3[transforms.Length];
+            Vector2[] points = new Vector2[transforms.Length];
+
+            // First, convert the pivot to worldspace
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                worldSpaces[i] = transforms[i].TransformPoint(thisPivot);
+            }
+
+            // Then, convert to canvas space
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                canvasSpaces[i] = canvas.InverseTransformPoint(worldSpaces[i]);
+            }
+
+            // Calculate delta from the canvas pivot point
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                points[i] = new Vector2(canvasSpaces[i].x, canvasSpaces[i].y);
+            }
+
+            // And assign the converted points to the line renderer
+            lr.Points = points;
+            lr.RelativeSize = false;
+            lr.drivenExternally = true;
+
+            previousPositions = new Vector2[transforms.Length];
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                previousPositions[i] = transforms[i].anchoredPosition;
+            }
+        }
     }
+
 }

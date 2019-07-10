@@ -15,7 +15,11 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public int columnID;
     public int rowID;
     public List<CourseNode> equivalent = new List<CourseNode>();
-    public List<UILineRenderer> connectingLine = new List<UILineRenderer>();
+    public List<UILineRenderer> backEdge = new List<UILineRenderer>();
+    public List<UILineRenderer> forwardEdge = new List<UILineRenderer>();
+
+    //testing
+    public List<CourseNode> unlocks = new List<CourseNode>();
 
     private void Awake()
     {
@@ -31,7 +35,7 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if(equivalent.Count == 0)
         {
-            foreach (UILineRenderer line in connectingLine)
+            foreach (UILineRenderer line in backEdge)
                 line.color = DegreeTree.instance.lineHighlight;
         }
         else
@@ -39,7 +43,7 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             OneOfNode on = transform.parent.GetComponent<OneOfNode>();
             if(on != null)
             {
-                foreach (UILineRenderer line in on.connectingLine)
+                foreach (UILineRenderer line in on.backEdge)
                     line.color = DegreeTree.instance.lineHighlight;
             }
         }
@@ -52,7 +56,7 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (equivalent.Count == 0)
         {
-            foreach (UILineRenderer line in connectingLine)
+            foreach (UILineRenderer line in backEdge)
                 line.color = DegreeTree.instance.lineColour;
         }
         else
@@ -60,7 +64,7 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             OneOfNode on = transform.parent.GetComponent<OneOfNode>();
             if (on != null)
             {
-                foreach (UILineRenderer line in on.connectingLine)
+                foreach (UILineRenderer line in on.backEdge)
                     line.color = DegreeTree.instance.lineColour;
             }
         }

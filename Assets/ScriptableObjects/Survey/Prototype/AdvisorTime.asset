@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d6ad1e0fdb8704d89d5f99ca3a714f, type: 3}
+  m_Name: AdvisorTime
+  m_EditorClassIdentifier: 
+  Question: How much time in total do you think you will spend with UVic advisors
+    each term with the new, prototype UVic course registration system?
+  questionType: 0
+  responses:
+  - < 30 minutes
+  - < 1 hour
+  - < 1 day
+  - '> 1 day'

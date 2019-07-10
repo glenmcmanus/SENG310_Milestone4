@@ -11,7 +11,11 @@ public class OneOfNode : MonoBehaviour
     public Toggle togglePrefab;
     public Vector2 toggleOffset;
     public List<CourseNode> courses = new List<CourseNode>();
-    public List<UILineRenderer> connectingLine = new List<UILineRenderer>();
+    public List<UILineRenderer> backEdge = new List<UILineRenderer>();
+    public List<UILineRenderer> forwardEdge = new List<UILineRenderer>();
+
+    //testing
+    public List<CourseNode> unlocks = new List<CourseNode>();
 
     public void AddCourse(Course course)
     {

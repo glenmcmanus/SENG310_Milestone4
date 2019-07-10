@@ -11,28 +11,28 @@ using UnityEditor;
 public class CourseDB : ScriptableObject
 {
     [Header("Offerings")]
-    public List<CourseOffering> cscOffering;
-    public List<CourseOffering> sengOffering;
-    public List<CourseOffering> mathOffering;
-    public List<CourseOffering> statOffering;
-    public List<CourseOffering> englOffering;
-    public List<CourseOffering> engrOffering;
-    public List<CourseOffering> greeOffering;
-    public List<CourseOffering> mediOffering;
-    public List<CourseOffering> philOffering;
-    public List<CourseOffering> psychOffering;
+    public List<CourseOffering> cscOffering = new List<CourseOffering>();
+    public List<CourseOffering> sengOffering = new List<CourseOffering>();
+    public List<CourseOffering> mathOffering = new List<CourseOffering>();
+    public List<CourseOffering> statOffering = new List<CourseOffering>();
+    public List<CourseOffering> englOffering = new List<CourseOffering>();
+    public List<CourseOffering> engrOffering = new List<CourseOffering>();
+    public List<CourseOffering> greeOffering = new List<CourseOffering>();
+    public List<CourseOffering> mediOffering = new List<CourseOffering>();
+    public List<CourseOffering> philOffering = new List<CourseOffering>();
+    public List<CourseOffering> psychOffering = new List<CourseOffering>();
 
     [Header("Courses")]
-    public List<Course> cscCourse;
-    public List<Course> sengCourse;
-    public List<Course> mathCourse;
-    public List<Course> statCourse;
-    public List<Course> englCourse;
-    public List<Course> engrCourse;
-    public List<Course> greeCourse;
-    public List<Course> mediCourse;
-    public List<Course> philCourse;
-    public List<Course> psychCourse;
+    public List<Course> cscCourse = new List<Course>();
+    public List<Course> sengCourse = new List<Course>();
+    public List<Course> mathCourse = new List<Course>();
+    public List<Course> statCourse = new List<Course>();
+    public List<Course> englCourse = new List<Course>();
+    public List<Course> engrCourse = new List<Course>();
+    public List<Course> greeCourse = new List<Course>();
+    public List<Course> mediCourse = new List<Course>();
+    public List<Course> philCourse = new List<Course>();
+    public List<Course> psychCourse = new List<Course>();
 
     public void ClearDB()
     {
@@ -80,6 +80,7 @@ public class CourseDB_Editor : Editor
             PopulateOfferings();
 
             EditorUtility.SetDirty(db);
+            AssetDatabase.SaveAssets();
         }
 
         EditorGUILayout.Space();

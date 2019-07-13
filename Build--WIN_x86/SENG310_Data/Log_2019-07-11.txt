@@ -1,0 +1,40 @@
+
+Demographic
+0 > How old are you?
+>> 25 - 30
+1 > What's your relationship with The University of Victoria?
+>> Attending as a graduate student
+2 > If you have attended UVIC, what program were/are you in? 
+>> asdfadsf
+3 > If you are currently attending as a student, what year of your studies are you in?
+>> 4
+
+Time since app start: 12.29909
+
+
+OnClick: FinishSimButton [child of Top] at 13.29803
+
+PrototypeSurvey
+0 > How much time in total do you think you will spend with UVic advisors each term with the new, prototype UVic course registration system?
+>> < 30 minutes
+1 > How likely do you think you will experience problems finding courses?
+>> Sometimes (1 - 5 times)
+2 > How would you rate the user experience for the new, prototype UVic course registration system?
+>> Moderately unsatisfied (It needs work but I can tolerate.)
+3 > Did the navigation feel smooth?
+>> No
+4 > Did the navigation feel intuitive?
+>> No
+5 > Did you feel like you had all the information you needed to choose a course to add to the degree tracker?
+>> No
+6 > What information was missing?
+>> asdf
+7 > What did you dislike about the prototype?
+>> asdf
+8 > What did you like about the prototype?
+>> asdf
+9 > What needs to be improved?
+>> asdf
+
+Time since app start: 33.17935
+

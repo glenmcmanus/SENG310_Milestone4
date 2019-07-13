@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Security;
@@ -20,13 +21,70 @@ public class mono_gmail : ScriptableObject
     [TextArea]
     public string log = "";
 
+    [ContextMenu("Save log to disk")]
+    public void SaveLogToDisk()
+    {
+        string path = Application.dataPath + "/Log_" + (System.DateTime.Today).ToString().Split(' ')[0] + ".txt";
+
+        Debug.Log(path);
+        if(File.Exists(path))
+        {
+            int counter = 1;
+            while (File.Exists(path + "_" + counter))
+            {
+                counter++;
+            }
+
+            path += "_" + counter;
+        }
+
+        FileStream fs = new FileStream(path, FileMode.Create, FileAccess.Write);
+
+        TextWriter tw = new StreamWriter(fs);
+        tw.Write(log);
+        tw.Close();
+    }
+
     public void LogClick(GameObject clickable)
     {
-        string log = "OnClick: " + clickable.name + " [child of ";
+        string log = "\nOnClick: " + clickable.name + " [child of ";
         string parent = clickable.transform.parent != null ? clickable.transform.parent.name : "None";
         log += parent + "]" + " at " + Time.timeSinceLevelLoad;
 
         this.log += log + "\n";
+    }
+
+    public void LogSearch()
+    {
+        string levels = "Levels: ";
+
+        if (CourseSearch.instance.levels.Count > 0)
+            levels += CourseSearch.instance.levels[0].ToString();
+        for (int i = 1; i < CourseSearch.instance.levels.Count; i++)
+        {
+            levels += ", " + CourseSearch.instance.levels[i].ToString();
+        }
+
+        string subjects = "Subjects: ";
+
+        if (CourseSearch.instance.subjects.Count > 0)
+            levels += CourseSearch.instance.subjects[0].ToString();
+        for (int i = 1; i < CourseSearch.instance.subjects.Count; i++)
+        {
+            subjects += ", " + CourseSearch.instance.subjects[i].ToString();
+        }
+
+        string keywords = "Keywords: ";
+
+        if (CourseSearch.instance.keywordContentParent.transform.childCount > 0)
+            levels += CourseSearch.instance.keywordContentParent.transform.GetChild(0).GetComponent<Text>().text;
+        for (int i = 1; i < CourseSearch.instance.subjects.Count; i++)
+        {
+            levels += ", " + CourseSearch.instance.keywordContentParent.transform.GetChild(i).GetComponent<Text>().text;
+        }
+
+        log += "\n\nOnSearch: \n>Semester: " + CourseSearch.instance.semester.ToString()
+                + "\n>" + levels + "\n>" + subjects + "\n>" + keywords;
     }
 
     public void LogSurvey(Survey survey)
@@ -59,6 +117,11 @@ public class mono_gmail : ScriptableObject
         }
 
         log += "\n\nTime since app start: " + Time.timeSinceLevelLoad + "\n\n";
+    }
+
+    public void LogTaskCompletion(Task task)
+    {
+        log += "\n\nCompleted task: " + task.name + " at " + Time.timeSinceLevelLoad + "\n\n";
     }
 
     public void LogTimeSinceAppStart()

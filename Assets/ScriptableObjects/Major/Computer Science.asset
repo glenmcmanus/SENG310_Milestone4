@@ -33,12 +33,12 @@ MonoBehaviour:
     count: 4
   oneOf:
   - equivalent:
-    - {fileID: 11400000, guid: d574faf99dfb7db49b6d97dc8715a63c, type: 2}
-    - {fileID: 11400000, guid: cf1fb1ef0345dac458168322feb12508, type: 2}
-    - {fileID: 11400000, guid: f784be9a6563a6248bac277589f5c223, type: 2}
-  - equivalent:
     - {fileID: 11400000, guid: 59cf5a1be769be54ab08a244031a7362, type: 2}
     - {fileID: 11400000, guid: db793f804591db448a0e93fba6b37a7a, type: 2}
+  - equivalent:
+    - {fileID: 11400000, guid: d574faf99dfb7db49b6d97dc8715a63c, type: 2}
+    - {fileID: 11400000, guid: f784be9a6563a6248bac277589f5c223, type: 2}
+    - {fileID: 11400000, guid: cf1fb1ef0345dac458168322feb12508, type: 2}
   - equivalent:
     - {fileID: 11400000, guid: 3f207cb7e7522c24e8627e2791209461, type: 2}
     - {fileID: 11400000, guid: 64fd1fa18f655e141891c34c0a4e0bdf, type: 2}

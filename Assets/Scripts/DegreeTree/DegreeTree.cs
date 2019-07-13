@@ -23,6 +23,7 @@ public class DegreeTree : MonoBehaviour
     [Header("Content")]
     public Transform content;
     public List<GameObject> columns;
+    public List<CourseChain> chains = new List<CourseChain>();
     public List<CourseNode> nodes;
     public List<ElectiveNode> electiveNodes;
     public List<OneOfNode> oneOfNodes;
@@ -45,19 +46,8 @@ public class DegreeTree : MonoBehaviour
     public ElectiveNode electivePrefab;
     public OneOfNode oneOfPrefab;
 
-    #region TestingVars
-    List<CourseNode> basis = new List<CourseNode>();
-    List<OneOfNode> oneOfBasis = new List<OneOfNode>();
-
-    List<CourseNode> curNodes = new List<CourseNode>();
-    List<OneOfNode> curOneOfs = new List<OneOfNode>();
-
-    List<CourseNode> queue = new List<CourseNode>();
-    List<OneOfNode> oneOfQueue = new List<OneOfNode>();
-
-    //course chain is a row or column, depending on A or B version
-    List<GameObject> courseChain = new List<GameObject>();
-    #endregion
+    [Header("Tasks")]
+    public TriggerTask navHere;
 
     List<Course> pending = new List<Course>();
 
@@ -80,6 +70,8 @@ public class DegreeTree : MonoBehaviour
 
     private void OnEnable()
     {
+        navHere.condition = true;
+
         if (!MainPanel.instance)
             return;
 
@@ -125,301 +117,6 @@ public class DegreeTree : MonoBehaviour
             content.localScale = new Vector3(minScale, minScale, 1);
     }
 
-    /* Loop through all courses in major
-     * Find courses that have no prereqs, make a list of them: 'basis'
-     * when a course has prereqs, check if the prereq is in the list  'basis'
-     * 
-     * when all courses have been checked, we can add nodes / [rows / cols] for the basis first,
-     * to determine if a new [row / col] needs to be added, see if basis[x].unlocks.count == basis[y].unlocks.count
-     * if they aren't equal, but all of unlocks in [x] are in [y], then they should occur in the same [row / col]
-     * 
-     * while resolving basis, build up a list of the next courses that are unlocked
-     * rinse -> repeat
-     * 
-     * electives occupy their own row? As they are assigned, they move into the appropriate place in the tree
-     */
-
-    #region Testing
-
-    public void Initialize()
-    {
-        BuildBasis();
-
-    }
-
-    public void BuildBasis()
-    {
-        BuildBasis(major.firstYearCore);
-        BuildBasis(major.secondYearCore);
-        BuildBasis(major.thirdYearCore);
-        BuildBasis(major.fourthYearCore);
-
-        foreach (Prereq ooc in major.oneOf)
-        {
-            OneOfNode oon = Instantiate(oneOfPrefab);
-            bool isBase = true;
-            foreach (Course c in ooc.equivalent)
-            {
-                if (c.prereqs.Count > 0)
-                    isBase = false;
-            }
-
-            if (isBase)
-                oneOfBasis.Add(oon);
-            else
-                oneOfQueue.Add(oon);
-        }
-
-        //resolve unlocks [basis]
-        foreach (CourseNode cn in queue)
-        {
-            foreach (Prereq pq in cn.course.prereqs)
-            {
-                foreach (Course c in pq.equivalent)
-                {
-                    bool _continue = false;
-                    foreach (CourseNode b in basis)
-                    {
-                        if (c == b.course)
-                        {
-                            b.unlocks.Add(cn);
-                            _continue = true;
-                            break;
-                        }
-                    }
-                    if (_continue)
-                        continue;
-
-                    foreach (OneOfNode o in oneOfBasis)
-                    {
-                        foreach (CourseNode ocn in o.courses)
-                        {
-                            if (c == ocn.course)
-                            {
-                                o.unlocks.Add(cn);
-                                _continue = true;
-                                break;
-                            }
-                        }
-                        if (_continue)
-                            break;
-                    }
-                }
-            }
-        }
-
-        List<CourseNode> processed = new List<CourseNode>();
-        List<TreeAxis> axis = new List<TreeAxis>();
-        foreach(CourseNode bcn1 in basis)
-        {
-            foreach(CourseNode bcn2 in basis)
-            {
-                if (bcn1 == bcn2)
-                    continue;
-
-                if (processed.Contains(bcn1) && processed.Contains(bcn2))
-                    continue;
-
-                if (bcn1.unlocks.Count == bcn2.unlocks.Count)
-                {
-                    if (!u1IsSubsetOfU2(bcn1.unlocks, bcn2.unlocks))
-                        continue;
-                }
-                else if(bcn1.unlocks.Count < bcn2.unlocks.Count)
-                {
-                    if (!u1IsSubsetOfU2(bcn1.unlocks, bcn2.unlocks))
-                        continue;
-                }
-                else if(bcn1.unlocks.Count > bcn2.unlocks.Count)
-                {
-                    if (!u1IsSubsetOfU2(bcn2.unlocks, bcn1.unlocks))
-                        continue;
-                }
-
-                if(axis.Count == 0)
-                {
-                    axis.Add(new TreeAxis(bcn1));
-                    axis[0].parallel.Add(bcn2);
-                    processed.Add(bcn1);
-                    processed.Add(bcn2);
-                    continue;
-                }
-
-                foreach(TreeAxis ta in axis)
-                {
-                    if(!processed.Contains(bcn2) && ta.parallel.Contains(bcn1))
-                    {
-                        ta.parallel.Add(bcn2);
-                        processed.Add(bcn2);
-                        break;
-                    }
-                    else if(!processed.Contains(bcn1) && ta.parallel.Contains(bcn2))
-                    {
-                        ta.parallel.Add(bcn1);
-                        processed.Add(bcn1);
-                        break;
-                    }
-                }
-            }
-        }
-
-        foreach(TreeAxis ta in axis)
-        {
-            GameObject courseChain = Instantiate(treeRow);
-            courseChain.transform.SetParent(content, false);
-
-            GameObject chainLink = Instantiate(treeColumn);
-            chainLink.transform.SetParent(courseChain.transform, false);
-
-            foreach(CourseNode cn in ta.parallel)
-            {
-                cn.transform.SetParent(chainLink.transform, false);
-
-                List<CourseNode> nextLinks = AddChainLink(cn);
-                for(int i = nextLinks.Count - 1; i >= 0; i--)
-                {
-                    List<CourseNode> next_next = AddChainLink(nextLinks[i]);
-                    nextLinks.RemoveAt(i);
-
-                    foreach (CourseNode next_cn in next_next)
-                        nextLinks.Add(next_cn);
-
-                    if (nextLinks.Count > 0 && i == 0)
-                        i = nextLinks.Count - 1;
-                }
-            }
-        }
-    }
-
-    bool u1IsSubsetOfU2(List<CourseNode> u1, List<CourseNode> u2)
-    {
-        if(u1.Count > u2.Count)
-        {
-            Debug.Log("u1 is > u2!!!");
-            return false;
-        }
-
-        foreach (CourseNode u in u1)
-        {
-            if (!u2.Contains(u))
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    void BuildBasis(List<Course> set)
-    {
-        foreach (Course c in set)
-        {
-            CourseNode cn = Instantiate(courseNode);
-            cn.SetCourse(c);
-
-            if (c.prereqs.Count > 0)
-                queue.Add(cn);
-            else
-                basis.Add(cn);
-        }
-    }
-
-    void ResolveUnlocks()
-    {
-        foreach(CourseNode cn in queue)
-        {
-            foreach(Prereq pq in cn.course.prereqs)
-            {
-                foreach(Course c in pq.equivalent)
-                {
-                    bool _continue = false;
-                    foreach (CourseNode b in curNodes)
-                    {
-                        if(c == b.course && !b.unlocks.Contains(cn))
-                        {
-                            b.unlocks.Add(cn);
-                            _continue = true;
-                            break;
-                        }
-                    }
-                    if (_continue)
-                        continue;
-
-                    foreach(OneOfNode o in curOneOfs)
-                    {
-                        foreach(CourseNode ocn in o.courses)
-                        {
-                            if(c == ocn.course && !o.unlocks.Contains(cn))
-                            {
-                                o.unlocks.Add(cn);
-                                _continue = true;
-                                break;
-                            }
-                        }
-                        if (_continue)
-                            break;
-                    }
-                }
-            }
-        }
-    }
-
-    List<CourseNode> AddChainLink(CourseNode cn)
-    {
-        ResolveUnlocks();
-
-        List<CourseNode> next_next = new List<CourseNode>();
-        foreach(CourseNode next in cn.unlocks)
-        {
-            if (curNodes.Contains(next))
-                continue;
-
-            int parentIndex = 0;
-            bool pqSatisfied = false;
-            foreach (Prereq pq in next.course.prereqs)
-            {
-                foreach(Course c in pq.equivalent)
-                {
-                    pqSatisfied = false;
-                    foreach(CourseNode cur in curNodes)
-                    {
-                        if (c == cur.course)
-                        {
-                            if (cur.transform.parent.GetSiblingIndex() + 1 > parentIndex)
-                                parentIndex = cur.transform.parent.GetSiblingIndex() + 1;
-
-                            pqSatisfied = true;
-                            break;
-                        }
-                    }
-                    if (!pqSatisfied)
-                        break;
-
-                }
-                if (!pqSatisfied)
-                    break;
-            }
-
-            //check if cn.transform.parent.childCount > cn.transform.parent.siblingNum
-            while(cn.transform.parent.childCount <= parentIndex)
-            {
-                GameObject chainLink = Instantiate(treeColumn);
-                chainLink.transform.SetParent(cn.transform.parent.parent, false);
-            }
-
-            next.transform.SetParent(cn.transform.parent.parent.GetChild(parentIndex), false);
-            queue.Remove(next);
-            curNodes.Add(next);
-
-            foreach (CourseNode nn in next.unlocks)
-                next_next.Add(nn);
-        }
-
-        return next_next;
-    }
-
-    #endregion
-
     public void SetupTree()
     {
         for(int i = content.childCount - 1; i >= 0; i--)
@@ -431,7 +128,7 @@ public class DegreeTree : MonoBehaviour
         }
 
         columns = new List<GameObject>();
-        AddColumn(4);
+        //AddColumn(4);
 
         ProcessOneOfs(major.oneOf);
 
@@ -449,9 +146,12 @@ public class DegreeTree : MonoBehaviour
             List<Course> removeMe = new List<Course>();
             foreach (Course c in pending)
             {
-                int col = ResolvePrereqs(c);
-                if (col >= 0)
-                    AddCourseNode(c, col);
+                //int col = ResolvePrereqs(c);
+                //if (col >= 0)
+                //    AddCourseNode(c, col);
+                Vector2Int gridPos = vResolvePrereqs(c);
+                if (gridPos.x >= 0)
+                    AddCourseNode(c, gridPos);
 
                 removeMe.Add(c);
             }
@@ -470,17 +170,36 @@ public class DegreeTree : MonoBehaviour
 
     public void ProcessElectives(List<Elective> electives)
     {
-        foreach(Elective e in electives)
+        CourseChain chain = Instantiate(treeRow).AddComponent<CourseChain>();
+        chain.transform.SetParent(content, false);
+        chains.Add(chain);
+
+        if(chain.GetComponent<HorizontalLayoutGroup>())
+            chain.GetComponent<HorizontalLayoutGroup>().spacing = 300;
+        else if(chain.GetComponent<VerticalLayoutGroup>())
+            chain.GetComponent<VerticalLayoutGroup>().spacing = 300;
+
+        foreach (Elective e in electives)
         {
-            for(int i = 0; i < e.count; i++)
+            GameObject chainLink = Instantiate(treeColumn);
+            chainLink.transform.SetParent(chain.transform, false);
+            chain.chainLinks.Add(chainLink);
+
+            if(chainLink.GetComponent<VerticalLayoutGroup>())
+                chainLink.GetComponent<VerticalLayoutGroup>().spacing = 50;
+            else if(chainLink.GetComponent<HorizontalLayoutGroup>())
+                chainLink.GetComponent<HorizontalLayoutGroup>().spacing = 50;
+
+            for (int i = 0; i < e.count; i++)
             {
                 ElectiveNode eNode = Instantiate(electivePrefab);
                 electiveNodes.Add(eNode);
                 eNode.SetCriteria(e);
 
-                eNode.transform.SetParent(columns[0].transform, false);
-
+                //eNode.transform.SetParent(columns[0].transform, false);
                 //columns[0].GetComponent<VerticalLayoutGroup>().spacing += eNode.rect.sizeDelta.y * 1.5f;
+
+                eNode.transform.SetParent(chainLink.transform, false);
             }
         }
     }
@@ -494,16 +213,21 @@ public class DegreeTree : MonoBehaviour
             List<CourseNode> prereqNodes = new List<CourseNode>();
 
             int colID = 0;
+            List<int> rowID = new List<int>();
             foreach (Course c in o.equivalent)
             {
                 currentCourses.Add(c);
                 oNode.AddCourse(c);
 
-                int pId = ResolvePrereqs(c);
+                /*int pId = ResolvePrereqs(c);
                 if (pId + 1 > colID)
-                    colID = pId + 1;
+                    colID = pId + 1;*/
 
-                foreach(CourseNode cn in nodes)
+                Vector2Int gridPos = vResolvePrereqs(c);
+                //if (gridPos.x >= 0)
+                //    AddCourseNode(c, gridPos);
+
+                foreach (CourseNode cn in nodes)
                 {
                     foreach(Prereq cp in c.prereqs)
                     {
@@ -531,6 +255,8 @@ public class DegreeTree : MonoBehaviour
                                 if (cn.columnID + 1 > colID)
                                     colID = cn.columnID + 1;
 
+                                rowID.Add(cn.rowID);
+
                                 prereqNodes.Add(cn);
                             }
                         }
@@ -538,10 +264,78 @@ public class DegreeTree : MonoBehaviour
                 }
             }
 
-            if (colID >= columns.Count)
+            /*
+             if (colID >= columns.Count)
                 AddColumn(colID - columns.Count + 1);
+                
+             oNode.rect.SetParent(columns[colID].transform, false);
+             */
 
-            oNode.rect.SetParent(columns[colID].transform, false);
+            int row = 0;
+            if (rowID.Count > 0)
+            {
+                int[] rowMode = new int[rowID.Count];
+                for (int i = 0; i < rowID.Count; i++)
+                {
+                    for (int j = 0; j < rowID.Count; j++)
+                    {
+                        if (rowID[i] == rowID[j])
+                        {
+                            rowMode[i]++;
+                        }
+                    }
+                }
+
+                row = Mathf.Max(rowMode);
+                for (int i = 0; i < rowMode.Length; i++)
+                    if (rowMode[i] == row)
+                        row = i;
+
+                row = rowID[row];
+            }
+
+            if (colID == 0)
+            {
+                //make a new chain
+                CourseChain chain = Instantiate(treeRow).AddComponent<CourseChain>();
+                chain.head = oNode.courses[0];
+                chain.transform.SetParent(content, false);
+                chains.Add(chain);
+
+                oNode.rowID = chains.Count - 1;
+
+                GameObject chainLink = Instantiate(treeColumn);
+                chainLink.transform.SetParent(chain.transform, false);
+                chains[chains.Count - 1].chainLinks.Add(chainLink);
+
+                oNode.transform.SetParent(chains[chains.Count - 1].chainLinks[0].transform, false);
+            }
+            else
+            {
+                oNode.rowID = row;
+
+                //parent node to chain[gridPos.y].getchild(gridPos.x)
+                while (colID >= chains[row].chainLinks.Count)
+                {
+                    GameObject chainLink = Instantiate(treeColumn);
+                    chainLink.transform.SetParent(chains[row].transform, false);
+                    chains[row].chainLinks.Add(chainLink);
+                }
+
+                oNode.transform.SetParent(chains[row].chainLinks[colID].transform, false);
+                if(chains[row].GetComponent<HorizontalLayoutGroup>())
+                    chains[row].GetComponent<HorizontalLayoutGroup>().spacing += oNode.rect.sizeDelta.x;
+                else if (chains[row].GetComponent<VerticalLayoutGroup>())
+                    chains[row].GetComponent<VerticalLayoutGroup>().spacing += oNode.rect.sizeDelta.x;
+
+                if(chains[row].chainLinks[colID].GetComponent<VerticalLayoutGroup>())
+                    chains[row].chainLinks[colID].GetComponent<VerticalLayoutGroup>().spacing += oNode.rect.sizeDelta.y;
+                else if(chains[row].chainLinks[colID].GetComponent<HorizontalLayoutGroup>())
+                        chains[row].chainLinks[colID].GetComponent<HorizontalLayoutGroup>().spacing += oNode.rect.sizeDelta.y;
+            }
+
+            oNode.columnID = colID;
+
             foreach (CourseNode cn in oNode.courses)
             {
                 nodes.Add(cn);
@@ -563,7 +357,7 @@ public class DegreeTree : MonoBehaviour
                     oNode.backEdge.Add(DrawLine(oNode.rect, cn.rect));
             }
 
-            columns[colID].GetComponent<VerticalLayoutGroup>().spacing += 32 * o.equivalent.Count;
+            //columns[colID].GetComponent<VerticalLayoutGroup>().spacing += 32 * o.equivalent.Count;
         }
     }
 
@@ -574,10 +368,13 @@ public class DegreeTree : MonoBehaviour
             if (currentCourses.Contains(c))
                 continue;
 
+            List<int> rowID = new List<int>();
+
             if (c.prereqs.Count == 0)
             {
-               // Debug.Log("Add " + c.name);
-                AddCourseNode(c, 0);
+                // Debug.Log("Add " + c.name);
+                //AddCourseNode(c, 0);
+                rowID.Add( AddCourseNode(c, Vector2Int.zero).y );
             }
             else
             {
@@ -597,6 +394,7 @@ public class DegreeTree : MonoBehaviour
                                 {
                                     if (cn.columnID + 1 > columnID)
                                         columnID = cn.columnID + 1;
+                                    rowID.Add(cn.rowID);
                                     break;
                                 }
                             }
@@ -609,14 +407,37 @@ public class DegreeTree : MonoBehaviour
 
                 if (skip)
                 {
-                    Debug.Log("Skip " + c.name);
+                    //Debug.Log("Skip " + c.name);
                     pending.Add(c);
                     continue;
                 }
                 else
                 {
-                   // Debug.Log("Add " + c.name);
-                    AddCourseNode(c, columnID);
+                    if (columnID < 0)
+                        columnID = 0;
+
+                    int[] rowMode = new int[rowID.Count];
+                    for (int i = 0; i < rowID.Count; i++)
+                    {
+                        for (int j = 0; j < rowID.Count; j++)
+                        {
+                            if (rowID[i] == rowID[j])
+                            {
+                                rowMode[i]++;
+                            }
+                        }
+                    }
+
+                    int row = Mathf.Max(rowMode);
+                    for (int i = 0; i < rowMode.Length; i++)
+                        if (rowMode[i] == row)
+                            row = i;
+
+                    row = rowID[row];
+
+                    // Debug.Log("Add " + c.name);
+                    //AddCourseNode(c, columnID);
+                    AddCourseNode(c, new Vector2Int(columnID, row));
                 }
             }
         }
@@ -646,6 +467,83 @@ public class DegreeTree : MonoBehaviour
                 }
             }
         }
+    }
+
+    //want Vector2Int for (column, row)
+    //where the deeper axis is determined by frequency of prereq placement
+    public Vector2Int vResolvePrereqs(Course c)
+    {
+        int colId = -1;
+        List<int> rowID = new List<int>();
+        foreach (Prereq prereq in c.prereqs)
+        {
+            for (int i = 0; i < prereq.equivalent.Count; i++)
+            {
+                if (!currentCourses.Contains(prereq.equivalent[i]))
+                {
+                    if (prereq.equivalent[i].prereqs.Count == 0)
+                    {
+                        rowID.Add(AddCourseNode(prereq.equivalent[i], Vector2Int.zero).y);
+                    }
+                    else
+                    {
+                        Vector2Int result = vResolvePrereqs(prereq.equivalent[i]);
+                        if (result.x >= 0)
+                        {
+                            Vector2Int pos = AddCourseNode(prereq.equivalent[i], result);
+
+                            if (pos.x + 1 > colId)
+                                colId = pos.x + 1;
+
+                            rowID.Add(pos.y);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (CourseNode cn in nodes)
+                    {
+                        if (cn.course == prereq.equivalent[i])
+                        {
+                            if(cn.columnID + 1 > colId)
+                                colId = cn.columnID + 1;
+
+                            rowID.Add(cn.rowID);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (colId < 0)
+            colId = 0;
+
+        int row = 0;
+        if (rowID.Count > 0)
+        {
+            //Debug.Log("Calculate mode");
+            int[] rowMode = new int[rowID.Count];
+            for (int i = 0; i < rowID.Count; i++)
+            {
+                //Debug.Log(i + " : " + rowID[i]);
+                for (int j = 0; j < rowID.Count; j++)
+                {
+                    if (rowID[i] == rowID[j])
+                    {
+                        rowMode[i]++;
+                    }
+                }
+            }
+
+            row = Mathf.Max(rowMode);
+            for (int i = 0; i < rowMode.Length; i++)
+                if (rowMode[i] == row)
+                    row = i;
+
+            row = rowID[row];
+        }
+
+        return new Vector2Int(colId, row);
     }
 
     public int ResolvePrereqs(Course c)
@@ -678,7 +576,7 @@ public class DegreeTree : MonoBehaviour
                 }
                 else
                 {
-                    foreach(CourseNode cn in nodes)
+                    foreach (CourseNode cn in nodes)
                     {
                         if (cn.course == prereq.equivalent[i] && cn.columnID + 1 > colId)
                             colId = cn.columnID + 1;
@@ -704,6 +602,108 @@ public class DegreeTree : MonoBehaviour
         {
             AddColumn();
         }
+    }
+
+    // when adding courses, if they are the first in their column / row, make a layout group
+    // can achieve ideal column / row setup?
+    // -> add chain link when columnID = 0, if the course unlocks 
+
+    Vector2Int AddCourseNode(Course course, Vector2Int gridPos)
+    {
+        CourseNode cn = Instantiate(courseNode);
+        cn.SetCourse(course);
+        cn.columnID = gridPos.x;
+
+        if (gridPos.x == 0)
+        {
+            //make a new chain
+            CourseChain chain = Instantiate(treeRow).AddComponent<CourseChain>();
+            chain.head = cn;
+            chain.transform.SetParent(content, false);
+            chains.Add(chain);
+
+            cn.rowID = chains.Count - 1;
+
+            GameObject chainLink = Instantiate(treeColumn);
+            chainLink.transform.SetParent(chain.transform, false);
+            chains[chains.Count - 1].chainLinks.Add(chainLink);
+
+            cn.transform.SetParent(chains[chains.Count - 1].chainLinks[0].transform, false);
+        }
+        else
+        {
+            cn.rowID = gridPos.y;
+
+            //parent node to chain[gridPos.y].getchild(gridPos.x)
+            while (gridPos.x >= chains[gridPos.y].chainLinks.Count)
+            {
+                GameObject chainLink = Instantiate(treeColumn);
+                chainLink.transform.SetParent(chains[gridPos.y].transform, false);
+                chains[gridPos.y].chainLinks.Add(chainLink);
+            }
+
+            cn.transform.SetParent(chains[gridPos.y].chainLinks[gridPos.x].transform, false);
+            if(chains[gridPos.y].GetComponent<HorizontalLayoutGroup>())
+                chains[gridPos.y].GetComponent<HorizontalLayoutGroup>().spacing += cn.rect.sizeDelta.x;
+            else if(chains[gridPos.y].GetComponent<VerticalLayoutGroup>())
+                chains[gridPos.y].GetComponent<VerticalLayoutGroup>().spacing += cn.rect.sizeDelta.x;
+
+            if(chains[gridPos.y].chainLinks[gridPos.x].GetComponent<VerticalLayoutGroup>())
+                chains[gridPos.y].chainLinks[gridPos.x].GetComponent<VerticalLayoutGroup>().spacing += cn.rect.sizeDelta.y;
+            else if (chains[gridPos.y].chainLinks[gridPos.x].GetComponent<HorizontalLayoutGroup>())
+                chains[gridPos.y].chainLinks[gridPos.x].GetComponent<HorizontalLayoutGroup>().spacing += cn.rect.sizeDelta.y;
+        }
+
+        nodes.Add(cn);
+        currentCourses.Add(course);
+
+        if (cn.course.prereqs.Count > 0)
+        {
+            //look for prereq and join their row
+
+            List<Course> done = new List<Course>();
+            foreach (Prereq prereq in cn.course.prereqs)
+            {
+                foreach (Course c in prereq.equivalent)
+                {
+                    bool skip = false;
+
+                    foreach (CourseNode node in nodes)
+                    {
+                        foreach (CourseNode checkEq in node.equivalent)
+                        {
+                            if (done.Contains(checkEq.course))
+                            {
+                                skip = true;
+                                break;
+                            }
+                        }
+                        if (skip)
+                            break;
+
+                        if (node.course == c)
+                        {
+                            done.Add(c);
+                            if (node.equivalent.Count > 0)
+                            {
+                                UILineRenderer edge = DrawLine(node.rect.parent.GetComponent<RectTransform>(), cn.rect);
+                                cn.backEdge.Add(edge);
+                                node.rect.parent.GetComponent<OneOfNode>().forwardEdge.Add(edge);
+                            }
+                            else
+                            {
+                                UILineRenderer edge = DrawLine(node.rect, cn.rect);
+                                cn.backEdge.Add(edge);
+                                node.forwardEdge.Add(edge);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return new Vector2Int(cn.columnID, cn.rowID);
     }
 
     void AddCourseNode(Course course, int columnID)
@@ -795,16 +795,8 @@ public class DegreeTree : MonoBehaviour
     }
 }
 
-
-#region TestingClasses
-
-public class TreeAxis
+public class CourseChain : MonoBehaviour
 {
-    public List<CourseNode> parallel = new List<CourseNode>();
-
-    public TreeAxis(CourseNode cn)
-    {
-        parallel.Add(cn);
-    }
+    public CourseNode head;
+    public List<GameObject> chainLinks = new List<GameObject>();
 }
-#endregion

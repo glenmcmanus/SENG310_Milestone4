@@ -1,0 +1,188 @@
+
+Demographic
+0 > How old are you?
+>> 30 - 35
+1 > What's your relationship with The University of Victoria?
+>> Attending as a graduate student
+2 > If you have attended UVIC, what program were/are you in? 
+>> adsf
+3 > If you are currently attending as a student, what year of your studies are you in?
+>> 4
+
+Time since app start: 16.15121
+
+
+OnClick: Calendar [child of Home] at 24.38411
+
+OnClick: HomeButton [child of NavBar] at 24.38411
+
+OnClick: CalendarButton [child of NavBar] at 24.38411
+
+OnClick: CalendarButton [child of NavBar] at 27.31767
+
+OnClick: CourseSearchButton [child of NavBar] at 27.31767
+
+OnClick: CourseSearchButton [child of NavBar] at 28.21663
+
+OnClick: DegreeTrackerButton [child of NavBar] at 28.21663
+
+OnClick: DegreeTrackerButton [child of NavBar] at 29.06553
+
+OnClick: CompareCoursesButton [child of NavBar] at 29.06553
+
+OnClick: CompareCoursesButton [child of NavBar] at 30.33234
+
+OnClick: HomeButton [child of NavBar] at 30.33234
+
+OnClick: HomeButton [child of NavBar] at 51.64499
+
+OnClick: CourseSearchButton [child of NavBar] at 51.64499
+
+
+OnSearch: 
+>Semester: Fall
+>Levels: computer
+>Subjects: 
+>Keywords: 
+OnClick: CourseSearchButton [child of NavBar] at 67.30839
+
+OnClick: DegreeTrackerButton [child of NavBar] at 67.30839
+
+OnClick: Toggle(Clone) [child of MATH 109] at 88.52148
+
+OnClick: Toggle(Clone) [child of MATH 109] at 88.52148
+
+OnClick: Toggle(Clone) [child of MATH 109] at 90.30468
+
+OnClick: Toggle(Clone) [child of MATH 100] at 90.30468
+
+OnClick: Toggle(Clone) [child of MATH 100] at 90.30468
+
+OnClick: Toggle(Clone) [child of MATH 100] at 91.28799
+
+OnClick: Toggle(Clone) [child of MATH 109] at 91.28799
+
+OnClick: Toggle(Clone) [child of MATH 109] at 91.28799
+
+OnClick: DegreeTrackerButton [child of NavBar] at 110.3662
+
+OnClick: CourseSearchButton [child of NavBar] at 110.3662
+
+OnClick: FindElective [child of Unassigned] at 110.3662
+
+OnClick: Fall [child of SemesterContent] at 116.8156
+
+OnClick: Spring [child of SemesterContent] at 116.8156
+
+
+OnSearch: 
+>Semester: Spring
+>Levels: L300CSCcomputer
+>Subjects: 
+>Keywords: 
+OnClick: CourseSearchButton [child of NavBar] at 127.4691
+
+OnClick: DegreeTrackerButton [child of NavBar] at 127.4691
+
+OnClick: DegreeTrackerButton [child of NavBar] at 131.1287
+
+OnClick: CourseSearchButton [child of NavBar] at 131.1287
+
+OnClick: FindElective [child of Unassigned] at 131.1287
+
+
+OnSearch: 
+>Semester: Spring
+>Levels: computer
+>Subjects: 
+>Keywords: 
+
+OnSearch: 
+>Semester: Spring
+>Levels: computer
+>Subjects: 
+>Keywords: 
+OnClick: Spring [child of SemesterContent] at 138.3441
+
+OnClick: Fall [child of SemesterContent] at 138.3441
+
+
+OnSearch: 
+>Semester: Fall
+>Levels: computer
+>Subjects: 
+>Keywords: 
+OnClick: Fall [child of SemesterContent] at 139.9949
+
+OnClick: Fall [child of SemesterContent] at 140.4431
+
+OnClick: Spring [child of SemesterContent] at 140.4431
+
+
+OnSearch: 
+>Semester: Spring
+>Levels: computer
+>Subjects: 
+>Keywords: 
+OnClick: CourseSearchButton [child of NavBar] at 142.8264
+
+OnClick: DegreeTrackerButton [child of NavBar] at 142.8264
+
+OnClick: DegreeTrackerButton [child of NavBar] at 147.4446
+
+OnClick: CourseSearchButton [child of NavBar] at 147.4446
+
+OnClick: FindElective [child of Unassigned] at 147.4446
+
+
+OnSearch: 
+>Semester: Spring
+>Levels: computer
+>Subjects: 
+>Keywords: 
+OnClick: Spring [child of SemesterContent] at 149.5596
+
+OnClick: Fall [child of SemesterContent] at 149.5596
+
+
+OnSearch: 
+>Semester: Fall
+>Levels: computer
+>Subjects: 
+>Keywords: 
+OnClick: Fall [child of SemesterContent] at 151.6079
+
+OnClick: Spring [child of SemesterContent] at 151.6079
+
+
+OnSearch: 
+>Semester: Spring
+>Levels: computer
+>Subjects: 
+>Keywords: 
+OnClick: FinishSimButton [child of Top] at 164.5218
+
+PrototypeSurvey
+0 > How much time in total do you think you will spend with UVic advisors each term with the new, prototype UVic course registration system?
+>> < 30 minutes
+1 > How likely do you think you will experience problems finding courses?
+>> Very often (> 5 times)
+2 > How would you rate the user experience for the new, prototype UVic course registration system?
+>> Neutral (it does not affect me.)
+3 > Did the navigation feel smooth?
+>> Yes
+4 > Did the navigation feel intuitive?
+>> Yes
+5 > Did you feel like you had all the information you needed to choose a course to add to the degree tracker?
+>> No
+6 > What information was missing?
+>> asdf
+7 > What did you dislike about the prototype?
+>> asdf
+8 > What did you like about the prototype?
+>> asdf
+9 > What needs to be improved?
+>> asdf
+
+Time since app start: 183.3871
+

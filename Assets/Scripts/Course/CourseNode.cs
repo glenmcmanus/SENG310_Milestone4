@@ -83,6 +83,6 @@ public class CourseNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void SetCourse(Course course)
     {
         this.course = course;
-        title.text = course.subject + " " + course.number;
+        name = title.text = course.subject + " " + course.number;
     }
 }

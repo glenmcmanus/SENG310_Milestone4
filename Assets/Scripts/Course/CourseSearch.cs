@@ -200,7 +200,7 @@ public class CourseSearch : MonoBehaviour, IPointerEnterHandler
             keywords.Add(keywordContentParent.transform.GetChild(i).GetComponent<Keyword>());
         }
 
-        Debug.Log(keywords.Count);
+        //Debug.Log(keywords.Count);
 
         foreach (CourseOffering c in subjectCourses)
         {

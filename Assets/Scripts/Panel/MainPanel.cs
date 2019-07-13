@@ -47,4 +47,10 @@ public class MainPanel : MonoBehaviour
 
         panel.SetActive(true);
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
 }

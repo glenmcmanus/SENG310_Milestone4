@@ -14,8 +14,8 @@ public class OneOfNode : MonoBehaviour
     public List<UILineRenderer> backEdge = new List<UILineRenderer>();
     public List<UILineRenderer> forwardEdge = new List<UILineRenderer>();
 
-    //testing
-    public List<CourseNode> unlocks = new List<CourseNode>();
+    public int columnID;
+    public int rowID;
 
     public void AddCourse(Course course)
     {

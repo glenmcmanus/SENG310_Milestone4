@@ -25,7 +25,7 @@ public class ElectiveNode : MonoBehaviour
         SidePanel.instance.SetLevels(elective.level);
         SidePanel.instance.ClearKeywords();
 
-        MainPanel.instance.NavigateTo(CourseSearch.instance.gameObject);
+        NavBar.instance.courseSearch.isOn = true;
         CourseSearch.instance.FindCourses();
     }
 
